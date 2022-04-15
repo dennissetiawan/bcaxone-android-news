@@ -1,28 +1,39 @@
 package model;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Source{
+@Entity
+public class Source {
 
+	@ColumnInfo(name = "name")
 	@SerializedName("name")
 	private String name;
 
 	@SerializedName("id")
-	private Object id;
+	@NonNull
+	@ColumnInfo(name = "sourceId")
+	@PrimaryKey
+	private String sourceId;
 
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 
-	public void setId(Object id){
-		this.id = id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Object getId(){
-		return id;
+	@NonNull
+	public String getSourceId() {
+		return sourceId;
+	}
+
+	public void setSourceId(@NonNull String sourceId) {
+		this.sourceId = sourceId;
 	}
 }

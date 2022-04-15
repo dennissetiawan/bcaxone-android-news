@@ -1,15 +1,20 @@
 package model;
 
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity
+@Entity(tableName = "Articles")
 public class ArticlesItem{
 
-	@PrimaryKey(autoGenerate = true)
+	@ColumnInfo(name = "articleID")
+	@PrimaryKey
 	private int articleID;
 
 	@ColumnInfo(name = "publishedAt")
@@ -18,7 +23,7 @@ public class ArticlesItem{
 
 	@ColumnInfo(name = "author")
 	@SerializedName("author")
-	private Object author;
+	private String author;
 
 	@ColumnInfo(name = "urlToImage")
 	@SerializedName("urlToImage")
@@ -28,7 +33,7 @@ public class ArticlesItem{
 	@SerializedName("description")
 	private String description;
 
-	@ColumnInfo(name = "source")
+	@Embedded(prefix = "source_")
 	@SerializedName("source")
 	private Source source;
 
@@ -44,72 +49,76 @@ public class ArticlesItem{
 	@SerializedName("content")
 	private String content;
 
-	public void setPublishedAt(String publishedAt){
-		this.publishedAt = publishedAt;
-	}
-
-	public String getPublishedAt(){
-		return publishedAt;
-	}
-
-	public void setAuthor(Object author){
-		this.author = author;
-	}
-
-	public Object getAuthor(){
-		return author;
-	}
-
-	public void setUrlToImage(String urlToImage){
-		this.urlToImage = urlToImage;
-	}
-
-	public String getUrlToImage(){
-		return urlToImage;
-	}
-
-	public void setDescription(String description){
-		this.description = description;
-	}
-
-	public String getDescription(){
-		return description;
-	}
-
-	public void setSource(Source source){
-		this.source = source;
-	}
-
-	public Source getSource(){
-		return source;
-	}
-
-	public void setTitle(String title){
-		this.title = title;
-	}
-
-	public String getTitle(){
-		return title;
-	}
-
-	public void setUrl(String url){
-		this.url = url;
-	}
-
-	public String getUrl(){
-		return url;
-	}
-
-	public void setContent(String content){
-		this.content = content;
-	}
-
-	public String getContent(){
-		return content;
-	}
-
 	public int getArticleID() {
 		return articleID;
 	}
 
+	public void setArticleID(int articleID) {
+		this.articleID = articleID;
+	}
+
+	public String getPublishedAt() {
+		return publishedAt;
+	}
+
+	public void setPublishedAt(String publishedAt) {
+		this.publishedAt = publishedAt;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getUrlToImage() {
+		return urlToImage;
+	}
+
+	public void setUrlToImage(String urlToImage) {
+		this.urlToImage = urlToImage;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Source getSource() {
+		return source;
+	}
+
+	public void setSource(Source source) {
+		this.source = source;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 }

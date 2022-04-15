@@ -1,16 +1,15 @@
-package com.example.bcaxone_android_news;
+package com.example.bcaxone_android_news.repository;
 
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.example.bcaxone_android_news.room.AppDatabase;
-import com.example.bcaxone_android_news.room.NewsDAO;
+import com.example.bcaxone_android_news.NewsAPIKeys;
+import com.example.bcaxone_android_news.room.NewsRoomService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -31,7 +30,7 @@ import retrofit2.Call;
 
 public class NewsRepository {
     //room
-    private final NewsDAO newsDAO;
+    public NewsRoomService room;
 
     //networking
     NewsAPIService newsApiService;
@@ -55,9 +54,7 @@ public class NewsRepository {
         NEWS_API_KEY = NewsAPIKeys.SECRET_API_KEY;
         query.put("apiKey", NEWS_API_KEY);
 
-
-        AppDatabase database = AppDatabase.getDatabase(application);
-        newsDAO = database.newsDAO();
+        room = new NewsRoomService(application);
     }
 
     public void getArticlesFromNetwork(Call<NewsAPIResponse> newsAPIResponseCall){
@@ -84,7 +81,7 @@ public class NewsRepository {
 
 
     //TODO: add desired query here in parameters and query.put
-    MutableLiveData<List<ArticlesItem>> getEverything(String q){
+    public MutableLiveData<List<ArticlesItem>> getEverything(String q){
         query = createQuery();
         query.put("q",q);
         query.values().removeAll(Collections.singleton(null));
@@ -94,7 +91,7 @@ public class NewsRepository {
         return articlesData;
     }
 
-    MutableLiveData<List<ArticlesItem>> getTopHeadlines(String category,String country){
+    public MutableLiveData<List<ArticlesItem>> getTopHeadlines(String category, String country){
         query = createQuery();
         query.put("country",country);
         query.put("category",category);
@@ -103,23 +100,6 @@ public class NewsRepository {
         Call<NewsAPIResponse> newsAPIResponseCall = newsApiService.getTopHeadlines(query);
         getArticlesFromNetwork(newsAPIResponseCall);
         return articlesData;
-    }
-
-    //ROOM
-    LiveData<List<ArticlesItem>> getAllArticles(){
-        return newsDAO.getAllArticles();
-    }
-
-    void insert(ArticlesItem articlesItem){
-        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(articlesItem));
-    }
-
-    void update(ArticlesItem articlesItem){
-        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.update(articlesItem));
-    }
-
-    void delete(ArticlesItem articlesItem){
-        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.delete(articlesItem));
     }
 
 
