@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textview_hello);
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
+        testAPIandRoom(textView);
+    }
+
+    private void testAPIandRoom(TextView textView) {
         newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
             @Override
             public void onChanged(List<ArticlesItem> articles) {
