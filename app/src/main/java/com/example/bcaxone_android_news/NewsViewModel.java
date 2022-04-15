@@ -6,13 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.kwabenaberko.newsapilib.models.Article;
-
 import java.util.List;
+
+import model.ArticlesItem;
 
 public class NewsViewModel extends AndroidViewModel {
     private NewsRepository newsRepository;
-    private MutableLiveData<List<Article>> articleData;
+    private MutableLiveData<List<ArticlesItem>> articleData;
 
 
     public NewsViewModel(@NonNull Application application) {
@@ -21,8 +21,13 @@ public class NewsViewModel extends AndroidViewModel {
 
     }
 
-    public MutableLiveData<List<Article>> getArticleData(String query) {
-        articleData = newsRepository.getAllArticles(query);
+    public MutableLiveData<List<ArticlesItem>> getArticleDataWithQuery(String query) {
+        articleData = newsRepository.getEverything(query);
         return articleData;
     }
+    public MutableLiveData<List<ArticlesItem>> getArticleDataTopHeadlines(String category,String country) {
+        articleData = newsRepository.getTopHeadlines(category,country);
+        return articleData;
+    }
+
 }
