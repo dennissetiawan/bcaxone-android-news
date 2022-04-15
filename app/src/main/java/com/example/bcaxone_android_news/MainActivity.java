@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,6 +26,10 @@ import model.ArticlesItem;
 public class MainActivity extends AppCompatActivity {
 
     private NewsViewModel newsViewModel;
+    private View root;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private FragmentPageAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +43,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<ArticlesItem> articles) {
                 textView.setText(articles.get(0).getTitle());
+                getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
+
             }
         });
-
-////      LOGOUT SESSION BUTTON
-//        Button button = findViewById(R.id.logoutbtn);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                SessionManagement.getINSTANCE().endUserSession(MainActivity.this);
-//                openLoginActivity();
-//            }
-//        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
             default: return super.onOptionsItemSelected(item);
     }
 }
+
+//TabMenu
+    public void tabMenu(View view){
+        getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
+    }
 
     private void openLoginActivity() {
         Intent intent = new Intent(this,LoginActivity.class);
