@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.kwabenaberko.newsapilib.models.Article;
-
 import java.util.List;
+
+import model.ArticlesItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textview_hello);
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
-        newsViewModel.getArticleData("indonesia").observe(MainActivity.this, new Observer<List<Article>>() {
+        newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
             @Override
-            public void onChanged(List<Article> articles) {
-                textView.setText(articles.get(0).getAuthor());
+            public void onChanged(List<ArticlesItem> articles) {
+                textView.setText(articles.get(0).getTitle());
             }
         });
     }
