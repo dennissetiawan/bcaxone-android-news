@@ -22,8 +22,7 @@ public class NewsRepository {
     public NewsRepository(Application application){
         newsApiClient = new NewsApiClient(API_KEY);
     }
-
-
+    
     MutableLiveData<List<Article>> getAllArticles(String query){
         newsApiClient.getEverything(new EverythingRequest.Builder().q(query).build(), new NewsApiClient.ArticlesResponseCallback() {
             @Override
