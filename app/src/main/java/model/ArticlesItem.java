@@ -1,94 +1,124 @@
 package model;
 
+import android.util.Log;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "Articles")
 public class ArticlesItem{
 
+	@ColumnInfo(name = "articleID")
+	@PrimaryKey
+	private int articleID;
+
+	@ColumnInfo(name = "publishedAt")
 	@SerializedName("publishedAt")
 	private String publishedAt;
 
+	@ColumnInfo(name = "author")
 	@SerializedName("author")
-	private Object author;
+	private String author;
 
+	@ColumnInfo(name = "urlToImage")
 	@SerializedName("urlToImage")
 	private String urlToImage;
 
+	@ColumnInfo(name = "description")
 	@SerializedName("description")
 	private String description;
 
+	@Embedded(prefix = "source_")
 	@SerializedName("source")
 	private Source source;
 
+	@ColumnInfo(name = "title")
 	@SerializedName("title")
 	private String title;
 
+	@ColumnInfo(name = "url")
 	@SerializedName("url")
 	private String url;
 
+	@ColumnInfo(name = "content")
 	@SerializedName("content")
 	private String content;
 
-	public void setPublishedAt(String publishedAt){
-		this.publishedAt = publishedAt;
+	public int getArticleID() {
+		return articleID;
 	}
 
-	public String getPublishedAt(){
+	public void setArticleID(int articleID) {
+		this.articleID = articleID;
+	}
+
+	public String getPublishedAt() {
 		return publishedAt;
 	}
 
-	public void setAuthor(Object author){
-		this.author = author;
+	public void setPublishedAt(String publishedAt) {
+		this.publishedAt = publishedAt;
 	}
 
-	public Object getAuthor(){
+	public String getAuthor() {
 		return author;
 	}
 
-	public void setUrlToImage(String urlToImage){
-		this.urlToImage = urlToImage;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
-	public String getUrlToImage(){
+	public String getUrlToImage() {
 		return urlToImage;
 	}
 
-	public void setDescription(String description){
-		this.description = description;
+	public void setUrlToImage(String urlToImage) {
+		this.urlToImage = urlToImage;
 	}
 
-	public String getDescription(){
+	public String getDescription() {
 		return description;
 	}
 
-	public void setSource(Source source){
-		this.source = source;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Source getSource(){
+	public Source getSource() {
 		return source;
 	}
 
-	public void setTitle(String title){
-		this.title = title;
+	public void setSource(Source source) {
+		this.source = source;
 	}
 
-	public String getTitle(){
+
+	public String getTitle() {
 		return title;
 	}
 
-	public void setUrl(String url){
-		this.url = url;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getUrl(){
+	public String getUrl() {
 		return url;
 	}
 
-	public void setContent(String content){
-		this.content = content;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public String getContent(){
+	public String getContent() {
 		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

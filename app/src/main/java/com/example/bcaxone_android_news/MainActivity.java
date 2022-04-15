@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,15 +40,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textview_hello);
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
-        newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
-            @Override
-            public void onChanged(List<ArticlesItem> articles) {
-                textView.setText(articles.get(0).getTitle());
-                getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
-
-            }
-        });
-
+        testAPIandRoom(textView);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,MenuFragment.newInstance()).commitNow();
         }
     }
-//  LOGIN SESSION
+    //  LOGIN SESSION
     @Override
     protected void onResume() {
         boolean isAllowed = SessionManagement.getINSTANCE().idSessionActive(this, Calendar.getInstance().getTime());
@@ -64,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onResume();
     }
-//  LOGOUT MENU
+    //  LOGOUT MENU
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.btnLogout:
@@ -72,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 openLoginActivity();
                 return true;
             default: return super.onOptionsItemSelected(item);
+        }
     }
-}
 
 //TabMenu
     public void tabMenu(View view){
@@ -85,4 +78,25 @@ public class MainActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
+    private void testAPIandRoom(TextView textView) {
+        newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
+            @Override
+            public void onChanged(List<ArticlesItem> articles) {
+
+                textView.setText(articles.get(0).getTitle());
+                newsViewModel.insertArticleToDB(articles.get(1));
+                Log.d("MainActivity","INSERT DONE!");
+            }
+        });
+
+        newsViewModel.getFromRoomAllArticles().observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
+            @Override
+            public void onChanged(List<ArticlesItem> articles) {
+                Log.d("MainActivity","db size :"+articles.size()+"Get from db: "+articles.get(0).getSource().getName());
+            }
+        });
+
+    }
+
 }
