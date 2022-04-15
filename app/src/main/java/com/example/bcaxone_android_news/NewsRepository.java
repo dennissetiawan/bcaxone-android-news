@@ -29,11 +29,13 @@ public class NewsRepository {
             @Override
             public void onSuccess(ArticleResponse articleResponse) {
                 articlesData.setValue( articleResponse.getArticles());
+
             }
 
             @Override
             public void onFailure(Throwable throwable) {
                 if(throwable instanceof IOException){
+
                     //TODO: show toast or something for connection error
                     Log.e(NewsRepository.class.getName(),"Network Error");
                 }else{

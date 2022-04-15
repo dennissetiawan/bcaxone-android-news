@@ -1,14 +1,22 @@
 package com.example.bcaxone_android_news;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kwabenaberko.newsapilib.models.Article;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,5 +37,47 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(articles.get(0).getAuthor());
             }
         });
+
+////      LOGOUT SESSION BUTTON
+//        Button button = findViewById(R.id.logoutbtn);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                SessionManagement.getINSTANCE().endUserSession(MainActivity.this);
+//                openLoginActivity();
+//            }
+//        });
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,MenuFragment.newInstance()).commitNow();
+        }
+    }
+//  LOGIN SESSION
+    @Override
+    protected void onResume() {
+        boolean isAllowed = SessionManagement.getINSTANCE().idSessionActive(this, Calendar.getInstance().getTime());
+        if(!isAllowed){
+            openLoginActivity();
+        }
+        super.onResume();
+    }
+//  LOGOUT MENU
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.btnLogout:
+                SessionManagement.getINSTANCE().endUserSession(MainActivity.this);
+                openLoginActivity();
+                return true;
+            default: return super.onOptionsItemSelected(item);
+    }
+}
+
+    private void openLoginActivity() {
+        Intent intent = new Intent(this,LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }
