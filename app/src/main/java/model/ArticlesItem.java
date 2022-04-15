@@ -1,30 +1,46 @@
 package model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class ArticlesItem{
 
+	@PrimaryKey(autoGenerate = true)
+	private int articleID;
+
+	@ColumnInfo(name = "publishedAt")
 	@SerializedName("publishedAt")
 	private String publishedAt;
 
+	@ColumnInfo(name = "author")
 	@SerializedName("author")
 	private Object author;
 
+	@ColumnInfo(name = "urlToImage")
 	@SerializedName("urlToImage")
 	private String urlToImage;
 
+	@ColumnInfo(name = "description")
 	@SerializedName("description")
 	private String description;
 
+	@ColumnInfo(name = "source")
 	@SerializedName("source")
 	private Source source;
 
+	@ColumnInfo(name = "title")
 	@SerializedName("title")
 	private String title;
 
+	@ColumnInfo(name = "url")
 	@SerializedName("url")
 	private String url;
 
+	@ColumnInfo(name = "content")
 	@SerializedName("content")
 	private String content;
 
@@ -91,4 +107,9 @@ public class ArticlesItem{
 	public String getContent(){
 		return content;
 	}
+
+	public int getArticleID() {
+		return articleID;
+	}
+
 }

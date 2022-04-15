@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">bcaxone-android-news</string>
+    <string name="db_name">news_database</string>
 </resources>

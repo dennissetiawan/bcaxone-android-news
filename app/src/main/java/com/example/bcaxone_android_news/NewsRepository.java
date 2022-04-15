@@ -3,15 +3,21 @@ package com.example.bcaxone_android_news;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+
+import com.example.bcaxone_android_news.room.AppDatabase;
+import com.example.bcaxone_android_news.room.NewsDAO;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,16 +30,17 @@ import retrofit2.Call;
 
 
 public class NewsRepository {
+    //room
+    private final NewsDAO newsDAO;
 
+    //networking
     NewsAPIService newsApiService;
-    private String NEWS_API_KEY;
+    private final String NEWS_API_KEY;
     private Map<String, String> query;
-
-    private MutableLiveData<List<ArticlesItem>> articlesData = new MutableLiveData<>();
-
-    private ExecutorService newtworkExecutor = Executors.newFixedThreadPool(4);
-    private Executor mainThread = new Executor(){
-        private Handler handler = new Handler(Looper.getMainLooper());
+    private final MutableLiveData<List<ArticlesItem>> articlesData = new MutableLiveData<>();
+    private final ExecutorService newtworkExecutor = Executors.newFixedThreadPool(4);
+    private final Executor mainThread = new Executor(){
+        private final Handler handler = new Handler(Looper.getMainLooper());
         @Override
         public void execute(Runnable runnable) {
             handler.post(runnable);
@@ -43,27 +50,28 @@ public class NewsRepository {
     public NewsRepository(Application application){
         RetrofitInstance retrofitInstance = new RetrofitInstance();
         newsApiService = retrofitInstance.getNewsAPIService();
+
         query = new HashMap<>();
         NEWS_API_KEY = NewsAPIKeys.SECRET_API_KEY;
         query.put("apiKey", NEWS_API_KEY);
+
+
+        AppDatabase database = AppDatabase.getDatabase(application);
+        newsDAO = database.newsDAO();
     }
 
     public void getArticlesFromNetwork(Call<NewsAPIResponse> newsAPIResponseCall){
-        newtworkExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    List<ArticlesItem> articles = newsAPIResponseCall.execute().body().getArticles();
-                    mainThread.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            articlesData.setValue(articles);
-                        }
-                    });
-                }
-                catch (IOException e){
-                    e.printStackTrace();
-                }
+        newtworkExecutor.execute(() -> {
+            try{
+                List<ArticlesItem> articles = Objects.requireNonNull(newsAPIResponseCall.execute().body()).getArticles();
+                mainThread.execute(() -> articlesData.setValue(articles));
+            }
+            catch (IOException e){
+                //TODO: Error handling toast
+                e.printStackTrace();
+            } catch (Exception e){
+                Log.e("NewsRepository","General exception in API Call");
+                e.printStackTrace();
             }
         });
     }
@@ -97,6 +105,22 @@ public class NewsRepository {
         return articlesData;
     }
 
+    //ROOM
+    LiveData<List<ArticlesItem>> getAllArticles(){
+        return newsDAO.getAllArticles();
+    }
+
+    void insert(ArticlesItem articlesItem){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(articlesItem));
+    }
+
+    void update(ArticlesItem articlesItem){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.update(articlesItem));
+    }
+
+    void delete(ArticlesItem articlesItem){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.delete(articlesItem));
+    }
 
 
 }
