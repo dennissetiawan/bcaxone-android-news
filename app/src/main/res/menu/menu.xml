@@ -4,8 +4,17 @@
     >
 
     <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.SearchView" />
+    <item
         android:id="@+id/btnLogout"
+        android:checkable="false"
+        android:enabled="true"
         android:title="@string/logout"
-        android:visible="true"/>
+        app:showAsAction="ifRoom"/>
+
 
 </menu>

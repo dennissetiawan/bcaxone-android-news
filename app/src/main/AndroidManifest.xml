@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bcaxone_android_news" >
+    package="com.example.bcaxone_android_news">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,14 +10,22 @@
         android:label="News Application"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Bcaxoneandroidnews" >
+        android:theme="@style/Theme.Bcaxoneandroidnews">
+        <activity
+            android:name=".recyclerview.ItemAdapter"
+            android:exported="false"
+            android:label="@string/title_activity_item_adapter"
+            android:theme="@style/Theme.Bcaxoneandroidnews.NoActionBar" />
+        <activity
+            android:name=".Item"
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

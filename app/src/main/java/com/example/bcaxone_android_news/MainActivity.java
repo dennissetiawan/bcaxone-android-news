@@ -9,6 +9,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textview_hello);
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
-        testAPIandRoom(textView);
+//        testAPIandRoom(textView);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,16 +50,25 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,MenuFragment.newInstance()).commitNow();
         }
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
     //  LOGIN SESSION
     @Override
     protected void onResume() {
         boolean isAllowed = SessionManagement.getINSTANCE().idSessionActive(this, Calendar.getInstance().getTime());
+//      Tab Menu
+        getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
+
         if(!isAllowed){
             openLoginActivity();
         }
         super.onResume();
     }
-    //  LOGOUT MENU
+    //  LOGOUT SESSION
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.btnLogout:
@@ -68,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//TabMenu
-    public void tabMenu(View view){
-        getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
-    }
+////TabMenu
+//    public void tabMenu(View view){
+//        getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
+//    }
 
     private void openLoginActivity() {
         Intent intent = new Intent(this,LoginActivity.class);

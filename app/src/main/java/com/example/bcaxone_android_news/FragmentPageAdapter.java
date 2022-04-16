@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class FragmentPageAdapter extends FragmentStateAdapter{
-    private final int COUNT = 3;
-    private String tabTitles[] = new String[]{"Tab 1", "Tab 2", "Tab 3"};
+    private final int COUNT = 7;
+
 
     public FragmentPageAdapter(@NonNull Fragment fragment) {
         super(fragment);

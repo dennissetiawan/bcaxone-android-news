@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Please insert Username and Password for login",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(username.equals("admin") && password.equals("admin")){
+                if(username.equals("admin") && password.equals("1")){
                     startAndStoreSession();
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

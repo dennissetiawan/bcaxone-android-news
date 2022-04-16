@@ -18,6 +18,7 @@ public class TabFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private FragmentPageAdapter pagerAdapter;
+    public String tabTitles[] = new String[]{"Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"};
 
     public static TabFragment newInstance() {
         return new TabFragment();
@@ -27,13 +28,14 @@ public class TabFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         root = inflater.inflate(R.layout.tab_host, container, false);
         tabLayout = root.findViewById(R.id.tabLayout);
         viewPager2 = root.findViewById(R.id.viewpager);
         pagerAdapter = new FragmentPageAdapter(this);
         viewPager2.setAdapter(pagerAdapter);
         new TabLayoutMediator(tabLayout, viewPager2,
-                (tab, position) -> tab.setText("Tab " + (position + 1))
+                (tab, position) -> tab.setText(tabTitles[position])
         ).attach();
         return root;
     }
