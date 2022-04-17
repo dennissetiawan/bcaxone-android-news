@@ -7,12 +7,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SessionManagement {
-    public static final String SESSION_PREFERENCE = "om.example.bcaxone_android_news.SessionManagement.SESSION_PREFERENCE";
-    public static final String  SESSION_TOKEN = "om.example.bcaxone_android_news.SessionManagement.SESSION_TOKEN";
-    public static final String  SESSION_EXPIRE_TIME = "om.example.bcaxone_android_news.SessionManagement.SESSION_EXPIRE_TIME";
+    //TODO: implement session token in login session
+    public static final String SESSION_PREFERENCE = "com.example.bcaxone_android_news.SessionManagement.SESSION_PREFERENCE";
+    public static final String SESSION_TOKEN = "com.example.bcaxone_android_news.SessionManagement.SESSION_TOKEN";
+    public static final String SESSION_EXPIRE_TIME = "com.example.bcaxone_android_news.SessionManagement.SESSION_EXPIRE_TIME";
 
     private static SessionManagement INSTANCE;
-    public static SessionManagement getINSTANCE(){
+    public static SessionManagement getInstance(){
         if(INSTANCE==null){
             INSTANCE = new SessionManagement();
         }
@@ -31,16 +32,16 @@ public class SessionManagement {
         editor.apply();
     }
 
-    public boolean idSessionActive(Context context, Date currentTime){
+    public boolean isSessionActive(Context context, Date currentTime){
         Date sessionExpiredAt = new Date(context.getSharedPreferences(SESSION_PREFERENCE, Context.MODE_PRIVATE).getLong(SESSION_EXPIRE_TIME,0));
         return !currentTime.after(sessionExpiredAt);
 
     }
 
     public void endUserSession (Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SESSION_PREFERENCE,Context.MODE_PRIVATE);
-        sharedPreferences.edit().clear();
-        sharedPreferences.edit().apply();
+        SharedPreferences.Editor editor = context.getSharedPreferences(SESSION_PREFERENCE,Context.MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
 
     }
 }

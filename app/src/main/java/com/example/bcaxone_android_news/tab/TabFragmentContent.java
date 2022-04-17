@@ -1,4 +1,4 @@
-package com.example.bcaxone_android_news;
+package com.example.bcaxone_android_news.tab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.bcaxone_android_news.R;
 
 public class TabFragmentContent extends Fragment{
 
@@ -34,7 +36,7 @@ public class TabFragmentContent extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.tab_content, container, false);
-        TextView tv = root.findViewById(R.id.viewContent);
+        TextView tv = root.findViewById(R.id.tab_textview_content);
         tv.setText(tabTitles[mPage]);
         return root;
     }

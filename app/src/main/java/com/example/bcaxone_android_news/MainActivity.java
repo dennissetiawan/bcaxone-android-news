@@ -5,21 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Calendar;
 import java.util.List;
@@ -29,10 +22,6 @@ import model.ArticlesItem;
 public class MainActivity extends AppCompatActivity {
 
     private NewsViewModel newsViewModel;
-    private View root;
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
-    private FragmentPageAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,MenuFragment.newInstance()).commitNow();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container,MenuFragment.newInstance()).commitNow();
         }
     }
 
@@ -59,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
     //  LOGIN SESSION
     @Override
     protected void onResume() {
-        boolean isAllowed = SessionManagement.getINSTANCE().idSessionActive(this, Calendar.getInstance().getTime());
+        boolean isAllowed = SessionManagement.getInstance().isSessionActive(this, Calendar.getInstance().getTime());
 //      Tab Menu
-        getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.main_container,TabFragment.newInstance()).commitNow();
 
         if(!isAllowed){
             openLoginActivity();
@@ -71,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
     //  LOGOUT SESSION
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.btnLogout:
-                SessionManagement.getINSTANCE().endUserSession(MainActivity.this);
+            case R.id.item_logout:
+                SessionManagement.getInstance().endUserSession(MainActivity.this);
                 openLoginActivity();
                 return true;
             default: return super.onOptionsItemSelected(item);

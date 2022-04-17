@@ -1,14 +1,14 @@
-package com.example.bcaxone_android_news;
+package com.example.bcaxone_android_news.tab;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class FragmentPageAdapter extends FragmentStateAdapter{
+public class TabFragmentPageAdapter extends FragmentStateAdapter{
     private final int COUNT = 7;
 
 
-    public FragmentPageAdapter(@NonNull Fragment fragment) {
+    public TabFragmentPageAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
 
