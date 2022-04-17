@@ -14,15 +14,23 @@ import com.example.bcaxone_android_news.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList;
+
+import model.ArticlesItem;
+
 public class TabFragment extends Fragment {
     private View root;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private TabFragmentPageAdapter pagerAdapter;
     public String tabTitles[] = new String[]{"Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"};
+    private ArrayList<ArrayList<ArticlesItem>> categoryArticles = new ArrayList<ArrayList<ArticlesItem>>();
 
-    public static TabFragment newInstance() {
-        return new TabFragment();
+
+    public static TabFragment newInstance(ArrayList<ArrayList<ArticlesItem>> categoryArticles) {
+        TabFragment tabFragment = new TabFragment();
+        tabFragment.categoryArticles = categoryArticles;
+        return tabFragment;
     }
 
     @Nullable
@@ -33,7 +41,7 @@ public class TabFragment extends Fragment {
         root = inflater.inflate(R.layout.tab_host, container, false);
         tabLayout = root.findViewById(R.id.tab_layout_categories);
         viewPager2 = root.findViewById(R.id.tab_viewpager);
-        pagerAdapter = new TabFragmentPageAdapter(this);
+        pagerAdapter = new TabFragmentPageAdapter(this,categoryArticles);
         viewPager2.setAdapter(pagerAdapter);
         new TabLayoutMediator(tabLayout, viewPager2,
                 (tab, position) -> tab.setText(tabTitles[position])

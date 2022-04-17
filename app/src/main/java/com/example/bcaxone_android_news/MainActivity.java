@@ -14,14 +14,21 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.bcaxone_android_news.tab.TabFragment;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import model.ArticlesItem;
+import retrofit.NewsAPIKeys;
 
 public class MainActivity extends AppCompatActivity {
 
     private NewsViewModel newsViewModel;
+    private ArrayList<ArrayList<ArticlesItem>> categoryArticles = new ArrayList<>();
+    public String APICategoryCalls[] = new String[]{NewsAPIKeys.CATEGORY_BUSINESS, NewsAPIKeys.CATEGORY_ENTERTAINMENT, NewsAPIKeys.CATEGORY_GENERAL,
+            NewsAPIKeys.CATEGORY_HEALTH, NewsAPIKeys.CATEGORY_SCIENCE, NewsAPIKeys.CATEGORY_SPORTS, NewsAPIKeys.CATEGORY_TECHNOLOGY};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
 //        testAPIandRoom(textView);
+        getDataFromAPI();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -49,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         boolean isAllowed = SessionManagement.getInstance().isSessionActive(this, Calendar.getInstance().getTime());
-//      Tab Menu
-//        getSupportFragmentManager().beginTransaction().replace(R.id.main_container,TabFragment.newInstance()).commitNow();
 
         if(!isAllowed){
             openLoginActivity();
@@ -68,35 +74,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-////TabMenu
-//    public void tabMenu(View view){
-//        getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
-//    }
-
     private void openLoginActivity() {
         Intent intent = new Intent(this,LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
-    private void testAPIandRoom(TextView textView) {
-        newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
-            @Override
-            public void onChanged(List<ArticlesItem> articles) {
-
-                textView.setText(articles.get(0).getTitle());
-                newsViewModel.insertArticleToDB(articles.get(1));
-                Log.d("MainActivity","INSERT DONE!");
-            }
-        });
-
-        newsViewModel.getFromRoomAllArticles().observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
-            @Override
-            public void onChanged(List<ArticlesItem> articles) {
-                Log.d("MainActivity","db size :"+articles.size()+"Get from db: "+articles.get(0).getSource().getName());
-            }
-        });
-
+    private void getDataFromAPI(){
+        for (int i =0 ;i<7;i++) {
+            int finalI = i;
+            newsViewModel.getArticleDataTopHeadlines(APICategoryCalls[i],NewsAPIKeys.COUNTRY_INDONESIA).observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
+                @Override
+                public void onChanged(List<ArticlesItem> articlesItems) {
+                    categoryArticles.add((ArrayList<ArticlesItem>) articlesItems);
+                    if (finalI ==6){
+                        //      Tab Menu
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, TabFragment.newInstance(categoryArticles)).commitNow();
+                    }
+                }
+            });
+        }
     }
+
+//    private void testAPIandRoom(TextView textView) {
+//        newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
+//            @Override
+//            public void onChanged(List<ArticlesItem> articles) {
+//
+//                textView.setText(articles.get(0).getTitle());
+//                newsViewModel.insertArticleToDB(articles.get(1));
+//                Log.d("MainActivity","INSERT DONE!");
+//            }
+//        });
+//
+//        newsViewModel.getFromRoomAllArticles().observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
+//            @Override
+//            public void onChanged(List<ArticlesItem> articles) {
+////                Log.d("MainActivity","db size :"+articles.size()+"Get from db: "+articles.get(0).getSource().getName());
+//            }
+//        });
+//
+//    }
 
 }
