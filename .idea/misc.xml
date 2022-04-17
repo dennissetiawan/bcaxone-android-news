@@ -3,11 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/activity_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/activity_item_adapter.xml" value="0.36666666666666664" />
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/activity_login.xml" value="0.35260416666666666" />
-        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/content_item_adapter.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/fragment_first.xml" value="0.36666666666666664" />
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/fragment_menu.xml" value="0.33" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/fragment_recycler.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/item_data.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/item_data_adapter.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/tab_content.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/tab_host.xml" value="0.1" />
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.1703125" />
+        <entry key="app/src/main/res/layout/fragment_recycler.xml" value="0.20380434782608695" />
+        <entry key="app/src/main/res/layout/item_data.xml" value="0.20380434782608695" />
+        <entry key="app/src/main/res/layout/item_data_adapter.xml" value="0.20380434782608695" />
+        <entry key="app/src/main/res/layout/tab_content.xml" value="0.20380434782608695" />
+        <entry key="app/src/main/res/layout/tab_host.xml" value="0.38698224852071006" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.4116256713867188" />
       </map>
     </option>
   </component>

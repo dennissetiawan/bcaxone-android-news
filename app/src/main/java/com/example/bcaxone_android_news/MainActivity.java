@@ -8,12 +8,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
@@ -32,43 +31,47 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textview_hello);
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
-        testAPIandRoom(textView);
-////      LOGOUT SESSION BUTTON
-//        Button button = findViewById(R.id.logoutbtn);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                SessionManagement.getINSTANCE().endUserSession(MainActivity.this);
-//                openLoginActivity();
-//            }
-//        });
-
+//        testAPIandRoom(textView);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,MenuFragment.newInstance()).commitNow();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container,MenuFragment.newInstance()).commitNow();
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
     }
     //  LOGIN SESSION
     @Override
     protected void onResume() {
-        boolean isAllowed = SessionManagement.getINSTANCE().idSessionActive(this, Calendar.getInstance().getTime());
+        boolean isAllowed = SessionManagement.getInstance().isSessionActive(this, Calendar.getInstance().getTime());
+//      Tab Menu
+//        getSupportFragmentManager().beginTransaction().replace(R.id.main_container,TabFragment.newInstance()).commitNow();
+
         if(!isAllowed){
             openLoginActivity();
         }
         super.onResume();
     }
-    //  LOGOUT MENU
+    //  LOGOUT SESSION
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.btnLogout:
-                SessionManagement.getINSTANCE().endUserSession(MainActivity.this);
+            case R.id.item_logout:
+                SessionManagement.getInstance().endUserSession(MainActivity.this);
                 openLoginActivity();
                 return true;
             default: return super.onOptionsItemSelected(item);
         }
     }
+
+////TabMenu
+//    public void tabMenu(View view){
+//        getSupportFragmentManager().beginTransaction().replace(R.id.containermenu,TabFragment.newInstance()).commitNow();
+//    }
 
     private void openLoginActivity() {
         Intent intent = new Intent(this,LoginActivity.class);

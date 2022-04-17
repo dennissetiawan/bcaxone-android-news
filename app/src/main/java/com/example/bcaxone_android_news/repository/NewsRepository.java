@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.example.bcaxone_android_news.NewsAPIKeys;
+import retrofit.NewsAPIKeys;
 import com.example.bcaxone_android_news.room.NewsRoomService;
 
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class NewsRepository {
                 mainThread.execute(() -> articlesData.setValue(articles));
             }
             catch (IOException e){
-                //TODO: Error handling toast
+                //TODO: Error handling snackbar
                 e.printStackTrace();
             } catch (Exception e){
                 Log.e("NewsRepository","General exception in API Call");
