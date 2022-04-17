@@ -14,12 +14,26 @@ import androidx.room.Update;
 import java.util.List;
 
 import model.ArticlesItem;
+import model.User;
+import model.UserWithArticles;
 
 @Dao
 public interface NewsDAO {
     @Transaction
     @Query("SELECT * FROM Articles")
     LiveData<List<ArticlesItem>> selectAllArticles();
+
+    @Transaction
+    @Query("SELECT * FROM User WHERE userID=:userId")
+    public LiveData<List<UserWithArticles>> selectUserWithArticles(int userId);
+
+    @Transaction
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(UserArticleCrossRef userArticleCrossRef);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(User user);
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ArticlesItem articlesItem);

@@ -6,11 +6,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "Articles")
+@Entity(tableName = "Articles",
+		indices = {@Index(value = {"url"},unique = true)}
+)
 public class ArticlesItem{
 
 	@ColumnInfo(name = "articleID")
@@ -40,6 +43,7 @@ public class ArticlesItem{
 	@ColumnInfo(name = "title")
 	@SerializedName("title")
 	private String title;
+
 
 	@ColumnInfo(name = "url")
 	@SerializedName("url")
