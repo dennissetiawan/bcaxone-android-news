@@ -26,7 +26,6 @@ public class TabFragment extends Fragment {
     public String tabTitles[] = new String[]{"Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"};
     private ArrayList<ArrayList<ArticlesItem>> categoryArticles = new ArrayList<ArrayList<ArticlesItem>>();
 
-
     public static TabFragment newInstance(ArrayList<ArrayList<ArticlesItem>> categoryArticles) {
         TabFragment tabFragment = new TabFragment();
         tabFragment.categoryArticles = categoryArticles;

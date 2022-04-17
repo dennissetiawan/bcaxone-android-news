@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.recycler.ItemDataAdapter;
 import com.example.bcaxone_android_news.recycler.RecyclerFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +34,7 @@ public class TabFragmentContent extends Fragment{
     private ItemDataAdapter itemDataAdapter;
     private static ArrayList<ArticlesItem> articlesItems = new ArrayList<>();
     private static ArrayList<ArticlesItem> articlesItemsSource = new ArrayList<>();
-    private boolean isFragmentAvail;
+
 
     public static TabFragmentContent newInstance(ArrayList<ArticlesItem> paramArticlesItems){
 
@@ -51,14 +52,23 @@ public class TabFragmentContent extends Fragment{
         articlesItemsSource = (ArrayList<ArticlesItem>) articlesItems.clone();
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.tab_content, container, false);
+
+        recyclerView = root.findViewById(R.id.recyclerView);
+        itemDataAdapter = new ItemDataAdapter(articlesItemsSource);
+        recyclerView.setAdapter(itemDataAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        return root;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        itemDataAdapter = new ItemDataAdapter(articlesItemsSource);
-        recyclerView.setAdapter(itemDataAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
@@ -104,6 +114,17 @@ public class TabFragmentContent extends Fragment{
             articlesItemsSource.clear();
             articlesItemsSource.addAll((Collection<? extends ArticlesItem>) articlesItems.clone());
             itemDataAdapter.notifyDataSetChanged();
+        }
+        else{
+            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    snackbar.dismiss();
+                }
+            });
+            snackbar.show();
+            articlesItemsSource.clear();
         }
     }
 

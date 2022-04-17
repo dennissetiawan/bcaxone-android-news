@@ -3,6 +3,7 @@ package com.example.bcaxone_android_news;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -25,6 +26,7 @@ import retrofit.NewsAPIKeys;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean isFragmentAvail;
     private NewsViewModel newsViewModel;
     private ArrayList<ArrayList<ArticlesItem>> categoryArticles = new ArrayList<>();
     public String APICategoryCalls[] = new String[]{NewsAPIKeys.CATEGORY_BUSINESS, NewsAPIKeys.CATEGORY_ENTERTAINMENT, NewsAPIKeys.CATEGORY_GENERAL,
@@ -34,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        isFragmentAvail = false;
 
-        TextView textView = findViewById(R.id.textview_hello);
+//        TextView textView = findViewById(R.id.textview_hello);
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
 //        testAPIandRoom(textView);
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(List<ArticlesItem> articlesItems) {
                     categoryArticles.add((ArrayList<ArticlesItem>) articlesItems);
+//                    isFragmentAvail = true;
                     if (finalI ==6){
                         //      Tab Menu
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, TabFragment.newInstance(categoryArticles)).commitNow();
@@ -95,6 +99,15 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+//    public void onBackPressed() {
+//        Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_container);
+//        if (!isFragmentAvail)
+//            super.onBackPressed();
+//        else{
+//            getSupportFragmentManager().popBackStack();
+//        }
+//    }
 
 //    private void testAPIandRoom(TextView textView) {
 //        newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
