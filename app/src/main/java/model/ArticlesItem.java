@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
 public class ArticlesItem{
 
 	@ColumnInfo(name = "articleID")
-	@PrimaryKey
+	@PrimaryKey(autoGenerate = true)
 	private int articleID;
 
 	@ColumnInfo(name = "publishedAt")
