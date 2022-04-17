@@ -12,32 +12,32 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView usernametv, passwordtv;
-    Button loginbtn;
+    TextView usernameTextView, passwordTextView;
+    Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernametv = findViewById(R.id.username);
-        passwordtv = findViewById(R.id.password);
-        loginbtn = findViewById(R.id.loginbtn);
-        loginbtn.setOnClickListener(new View.OnClickListener() {
+        usernameTextView = findViewById(R.id.edittext_username);
+        passwordTextView = findViewById(R.id.edittext_password);
+        loginButton = findViewById(R.id.button_login);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                     login();
             }
 
             private void login() {
-                String username = usernametv.getText().toString();
-                String password = passwordtv.getText().toString();
+                String username = usernameTextView.getText().toString();
+                String password = passwordTextView.getText().toString();
 
                 if(TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
                     Toast.makeText(LoginActivity.this,"Please insert Username and Password for login",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(username.equals("admin") && password.equals("admin")){
+                if(username.equals("admin") && password.equals("1")){
                     startAndStoreSession();
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -45,12 +45,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(LoginActivity.this, "Username atau Password salah!",Toast.LENGTH_SHORT).show();
-                    return;
                 }
             }
 
             private void startAndStoreSession() {
-                SessionManagement.getINSTANCE().startUserSession(LoginActivity.this,5);
+                SessionManagement.getInstance().startUserSession(LoginActivity.this,5);
             }
         });
     }

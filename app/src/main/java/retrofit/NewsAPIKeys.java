@@ -1,4 +1,4 @@
-package com.example.bcaxone_android_news;
+package retrofit;
 
 public class NewsAPIKeys {
     public static final String SECRET_API_KEY = "8850862c9aea4bceaf5f19cd22d362ef";
