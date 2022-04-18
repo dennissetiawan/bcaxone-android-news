@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class LoginActivity extends AppCompatActivity {
 
     TextView usernameTextView, passwordTextView;
@@ -20,8 +22,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameTextView = findViewById(R.id.edittext_username);
-        passwordTextView = findViewById(R.id.edittext_password);
+        TextInputLayout usernameTextView = findViewById(R.id.edittext_username);
+        TextInputLayout passwordTextView = findViewById(R.id.edittext_password);
         loginButton = findViewById(R.id.button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             private void login() {
-                String username = usernameTextView.getText().toString();
-                String password = passwordTextView.getText().toString();
+                String username = usernameTextView.getEditText().getText().toString();
+                String password = passwordTextView.getEditText().getText().toString();
 
                 if(TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
                     Toast.makeText(LoginActivity.this,"Please insert Username and Password for login",Toast.LENGTH_SHORT).show();

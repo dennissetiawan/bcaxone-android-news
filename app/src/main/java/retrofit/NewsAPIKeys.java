@@ -1,7 +1,7 @@
 package retrofit;
 
 public class NewsAPIKeys {
-    public static final String SECRET_API_KEY = "8850862c9aea4bceaf5f19cd22d362ef";
+    public static final String SECRET_API_KEY = "44f7001621ba48d2bfeff6d034160de5";
     public static final String COUNTRY_INDONESIA = "id";
     public static final String COUNTRY_SINGAPORE = "sg";
     public static final String COUNTRY_US = "us";
