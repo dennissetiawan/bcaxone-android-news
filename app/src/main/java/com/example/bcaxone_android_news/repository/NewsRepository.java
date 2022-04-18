@@ -37,7 +37,7 @@ public class NewsRepository {
     private final String NEWS_API_KEY;
     private Map<String, String> query;
     private final MutableLiveData<List<ArticlesItem>> articlesData = new MutableLiveData<>();
-    private final ExecutorService newtworkExecutor = Executors.newFixedThreadPool(4);
+    private final ExecutorService networkExecutor = Executors.newFixedThreadPool(4);
     private final Executor mainThread = new Executor(){
         private final Handler handler = new Handler(Looper.getMainLooper());
         @Override
@@ -58,12 +58,13 @@ public class NewsRepository {
     }
 
     public void getArticlesFromNetwork(Call<NewsAPIResponse> newsAPIResponseCall){
-        newtworkExecutor.execute(() -> {
+        networkExecutor.execute(() -> {
             try{
                 List<ArticlesItem> articles = Objects.requireNonNull(newsAPIResponseCall.execute().body()).getArticles();
                 mainThread.execute(() -> articlesData.setValue(articles));
             }
             catch (IOException e){
+                Log.e("NewsRepository","IO exception in API Call");
                 //TODO: Error handling snackbar
                 e.printStackTrace();
             } catch (Exception e){

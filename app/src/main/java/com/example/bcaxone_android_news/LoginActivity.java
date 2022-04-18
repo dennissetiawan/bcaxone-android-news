@@ -39,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if(username.equals("admin") && password.equals("1")){
                     startAndStoreSession();
+                    //fetch api
+                    //insert room
+
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

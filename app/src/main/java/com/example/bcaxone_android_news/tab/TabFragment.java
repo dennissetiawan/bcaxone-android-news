@@ -1,13 +1,16 @@
 package com.example.bcaxone_android_news.tab;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.bcaxone_android_news.R;
@@ -24,12 +27,10 @@ public class TabFragment extends Fragment {
     private ViewPager2 viewPager2;
     private TabFragmentPageAdapter pagerAdapter;
     public String tabTitles[] = new String[]{"Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"};
-    private ArrayList<ArrayList<ArticlesItem>> categoryArticles = new ArrayList<ArrayList<ArticlesItem>>();
 
 
-    public static TabFragment newInstance(ArrayList<ArrayList<ArticlesItem>> categoryArticles) {
+    public static TabFragment newInstance() {
         TabFragment tabFragment = new TabFragment();
-        tabFragment.categoryArticles = categoryArticles;
         return tabFragment;
     }
 
@@ -40,13 +41,41 @@ public class TabFragment extends Fragment {
 
         root = inflater.inflate(R.layout.tab_host, container, false);
         tabLayout = root.findViewById(R.id.tab_layout_categories);
-        viewPager2 = root.findViewById(R.id.tab_viewpager);
-        pagerAdapter = new TabFragmentPageAdapter(this,categoryArticles);
-        viewPager2.setAdapter(pagerAdapter);
-        new TabLayoutMediator(tabLayout, viewPager2,
-                (tab, position) -> tab.setText(tabTitles[position])
-        ).attach();
+
+        for (String title: tabTitles) {
+            tabLayout.addTab(tabLayout.newTab().setText(title));
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setContentFragment(tab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        //set initial tab
+        tabLayout.selectTab(tabLayout.getTabAt(0));
+        setContentFragment(tabLayout.getTabAt(0));
+
         return root;
+    }
+
+    private void setContentFragment(TabLayout.Tab tab) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        TabFragmentContent fragmentContent = new TabFragmentContent(tab.getPosition());
+        fragmentManager.beginTransaction()
+                .replace(R.id.tab_content_container,fragmentContent)
+                .setReorderingAllowed(true)
+                .commit();
     }
 
     @Override

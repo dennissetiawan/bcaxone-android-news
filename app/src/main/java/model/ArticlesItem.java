@@ -49,6 +49,9 @@ public class ArticlesItem{
 	@SerializedName("content")
 	private String content;
 
+	@ColumnInfo(name = "category")
+	private String category;
+
 	public int getArticleID() {
 		return articleID;
 	}
@@ -120,5 +123,13 @@ public class ArticlesItem{
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }
