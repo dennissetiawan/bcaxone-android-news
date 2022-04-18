@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import model.ArticlesItem;
+import model.User;
+import model.UserWithArticles;
 
 public class NewsRoomService {
 
@@ -18,8 +20,22 @@ public class NewsRoomService {
     }
 
 
-    public LiveData<List<ArticlesItem>> getFromRoomAllArticles(){
+    public LiveData<List<ArticlesItem>> getAllArticles(){
         return newsDAO.selectAllArticles();
+    }
+
+
+    public LiveData<List<UserWithArticles>> getSavedArticles(int userId){
+        return newsDAO.selectUserWithArticles(userId);
+    }
+
+
+    public void insert(UserArticleCrossRef userArticleCrossRef){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(userArticleCrossRef));
+    }
+
+    public void insert(User user){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(user));
     }
 
     public void insert(ArticlesItem articlesItem){

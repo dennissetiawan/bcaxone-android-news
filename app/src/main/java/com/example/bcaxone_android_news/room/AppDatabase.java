@@ -14,8 +14,9 @@ import java.util.concurrent.Executors;
 
 import model.ArticlesItem;
 import model.Source;
+import model.User;
 
-@Database(entities = {ArticlesItem.class}, version = 1,exportSchema = false)
+@Database(entities = {ArticlesItem.class, User.class,UserArticleCrossRef.class}, version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract NewsDAO newsDAO();
 
