@@ -21,6 +21,10 @@ public interface NewsDAO {
     @Query("SELECT * FROM Articles")
     LiveData<List<ArticlesItem>> selectAllArticles();
 
+    @Transaction
+    @Query("SELECT * FROM Articles WHERE category = :category")
+    LiveData<List<ArticlesItem>> selectArticlesWithCategory(String category);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ArticlesItem articlesItem);
 
@@ -29,5 +33,9 @@ public interface NewsDAO {
 
     @Delete
     void delete(ArticlesItem articlesItem);
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert (List<ArticlesItem> articlesItemsList);
 
 }
