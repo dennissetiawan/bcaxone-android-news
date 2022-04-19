@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bcaxone_android_news.NewsViewModel;
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.recycler.ItemDataAdapter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;

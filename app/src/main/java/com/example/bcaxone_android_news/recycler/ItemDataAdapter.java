@@ -41,12 +41,12 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position){
         ArticlesItem item = items.get(position);
         ImageNewsURL = item.getUrlToImage();
-        LoadImageFromWebOperations(ImageNewsURL);
+
+        new DownLoadImageTask(holder.ImageNewsView).execute(ImageNewsURL);
 
         holder.TitleNews.setText(item.getTitle());
         holder.DescNews.setText(item.getDescription());
         holder.PublishDate.setText(item.getPublishedAt());
-
 
     }
 
@@ -78,12 +78,35 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
         }
     }
 
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
+    private class DownLoadImageTask extends AsyncTask<String,Void,Bitmap>{
+        ImageView imageView;
+
+        public DownLoadImageTask(ImageView imageView){
+            this.imageView = imageView;
         }
+
+        protected Bitmap doInBackground(String...urls){
+            String urlOfImage = urls[0];
+            Bitmap logo = null;
+            try{
+                InputStream is = new URL(urlOfImage).openStream();
+                logo = BitmapFactory.decodeStream(is);
+            }catch(Exception e){ // Catch the download exception
+                e.printStackTrace();
+            }
+            return logo;
+        }
+
+        protected void onPostExecute(Bitmap result){
+            imageView.setImageBitmap(result);
+        }
+
+//    public static Drawable LoadImageFromWebOperations(String url) {
+//        try {
+//            InputStream is = (InputStream) new URL(url).getContent();
+//            Drawable d = Drawable.createFromStream(is, "src name");
+//            return d;
+//        } catch (Exception e) {
+//            return null;
+//        }
 }}

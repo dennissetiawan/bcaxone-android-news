@@ -30,6 +30,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center_vertical"
             android:text="Title"
+            android:textStyle="bold"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@id/itemdata_image_news"
             app:layout_constraintEnd_toEndOf="parent"
