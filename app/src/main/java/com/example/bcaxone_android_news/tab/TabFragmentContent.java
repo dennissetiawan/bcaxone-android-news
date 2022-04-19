@@ -102,10 +102,8 @@ public class TabFragmentContent extends Fragment{
                 });
             } else {
                 Log.d("TabFragmentContent","getDataFromCache"+ pageAPIKeyCategories[pageNumber]+ "\n" +articlesItems.get(0).getCategory() +"\n" + articlesItems.size()+"\n" +articlesItems.get(0).getTitle());
-
-
+                articlesMasterData.clear();
                 articlesMasterData.addAll(articlesItems);
-                articlesItemsSource.addAll(articlesItems);
                 resetData();
             }
         });
@@ -120,9 +118,8 @@ public class TabFragmentContent extends Fragment{
         Log.d("TabFragmentContent","addAllToRoom"+ pageAPIKeyCategories[pageNumber] + "\n" +articlesItemListWithCategory.get(0).getCategory() +"\n" + articlesItemListWithCategory.size()+"\n" +articlesItemListWithCategory.get(0).getTitle());
         newsViewModel.insertArticleListToDB(articlesItemListWithCategory);
         Log.d("TabFragmentContent","insertToDB Done");
-
+        articlesMasterData.clear();
         articlesMasterData.addAll(articlesItemListWithCategory);
-        articlesItemsSource.addAll(articlesItemListWithCategory);
         Log.d("TabFragmentContent","addAllToRoom"+ pageAPIKeyCategories[pageNumber] +"DONE");
     }
 
@@ -141,7 +138,8 @@ public class TabFragmentContent extends Fragment{
         itemDataAdapter = new ItemDataAdapter(articlesItemsSource);
         recyclerView.setAdapter(itemDataAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        generateDataWithoutRoom();
+//        generateDataWithoutRoom();
+        generateData();
         return root;
     }
 
@@ -176,6 +174,7 @@ public class TabFragmentContent extends Fragment{
     }
 
     private void resetData() {
+        Log.d("TabFragmentContent","reset data" + articlesMasterData.size());
         articlesItemsSource.clear();
         articlesItemsSource.addAll(articlesMasterData);
         itemDataAdapter.notifyDataSetChanged();
@@ -190,15 +189,15 @@ public class TabFragmentContent extends Fragment{
             itemDataAdapter.notifyDataSetChanged();
         }
         else{
-            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction("Ok", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    snackbar.dismiss();
-                }
-            });
-            snackbar.show();
-            articlesItemsSource.clear();
+//            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
+//            snackbar.setAction("Ok", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    snackbar.dismiss();
+//                }
+//            });
+//            snackbar.show();
+//            articlesItemsSource.clear();
         }
     }
 

@@ -36,7 +36,7 @@ public class NewsRepository {
     NewsAPIService newsApiService;
     private final String NEWS_API_KEY;
     private Map<String, String> query;
-    private final MutableLiveData<List<ArticlesItem>> articlesData = new MutableLiveData<>();
+    private MutableLiveData<List<ArticlesItem>> articlesData = new MutableLiveData<>();
     private final ExecutorService networkExecutor = Executors.newFixedThreadPool(4);
     private final Executor mainThread = new Executor(){
         private final Handler handler = new Handler(Looper.getMainLooper());
@@ -58,10 +58,15 @@ public class NewsRepository {
     }
 
     public void getArticlesFromNetwork(Call<NewsAPIResponse> newsAPIResponseCall){
+        Log.e("NewsRepository","getArticlesFromNetwork");
         networkExecutor.execute(() -> {
             try{
                 List<ArticlesItem> articles = Objects.requireNonNull(newsAPIResponseCall.execute().body()).getArticles();
-                mainThread.execute(() -> articlesData.setValue(articles));
+                Log.e("NewsRepository","execute");
+                mainThread.execute(() -> {
+                    Log.e("NewsRepository","setValue");
+                    articlesData.setValue(articles);
+                });
             }
             catch (IOException e){
                 Log.e("NewsRepository","IO exception in API Call");
@@ -83,6 +88,7 @@ public class NewsRepository {
 
     //TODO: add desired query here in parameters and query.put
     public MutableLiveData<List<ArticlesItem>> getEverything(String q){
+        articlesData = new MutableLiveData<>();
         query = createQuery();
         query.put("q",q);
         query.values().removeAll(Collections.singleton(null));
@@ -93,6 +99,8 @@ public class NewsRepository {
     }
 
     public MutableLiveData<List<ArticlesItem>> getTopHeadlines(String category, String country){
+        Log.e("NewsRepository","getTopHeadlines");
+        articlesData = new MutableLiveData<>();
         query = createQuery();
         query.put("country",country);
         query.put("category",category);
@@ -100,6 +108,7 @@ public class NewsRepository {
 
         Call<NewsAPIResponse> newsAPIResponseCall = newsApiService.getTopHeadlines(query);
         getArticlesFromNetwork(newsAPIResponseCall);
+        Log.e("NewsRepository","Return articlesData");
         return articlesData;
     }
 
