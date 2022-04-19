@@ -9,16 +9,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.bcaxone_android_news.repository.NewsRepository;
+import com.example.bcaxone_android_news.room.UserArticleCrossRef;
 
 import java.util.List;
 
 import model.ArticlesItem;
+import model.User;
+import model.UserWithArticles;
 
 public class NewsViewModel extends AndroidViewModel {
     private NewsRepository newsRepository;
     private MutableLiveData<List<ArticlesItem>> articleData;
-
-
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
@@ -36,6 +37,12 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<ArticlesItem>> getFromRoomAllArticles() {
         return newsRepository.room.getFromRoomAllArticles();
     }
+    
+    
+    public LiveData<List<UserWithArticles>> getFromRoomSavedArticles(int userId) {
+        return newsRepository.room.getSavedArticles(userId);
+    }
+
 
     public LiveData<List<ArticlesItem>> getFromRoomArticlesWithCategory(String category) {
         return newsRepository.room.getFromRoomArticlesWithCategory(category);
@@ -47,6 +54,15 @@ public class NewsViewModel extends AndroidViewModel {
 
     public void insertArticleListToDB(List<ArticlesItem> articlesItemList) {
         newsRepository.room.insert(articlesItemList);
+    }
+
+
+    public void insertSavedArticleToDB(UserArticleCrossRef userArticleCrossRef) {
+        newsRepository.room.insert(userArticleCrossRef);
+    }
+
+    public void insertUser(User user) {
+        newsRepository.room.insert(user);
     }
 
 

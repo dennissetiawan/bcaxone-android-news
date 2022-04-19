@@ -18,11 +18,15 @@ import android.widget.TextView;
 import com.example.bcaxone_android_news.tab.TabFragment;
 
 import java.util.ArrayList;
+import com.example.bcaxone_android_news.room.UserArticleCrossRef;
+
 import java.util.Calendar;
 import java.util.List;
 
 import model.ArticlesItem;
 import retrofit.NewsAPIKeys;
+import model.User;
+import model.UserWithArticles;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,17 +93,30 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<ArticlesItem> articles) {
                 Log.d("MainActivity","testapionchanged");
                 textView.setText(articles.get(0).getTitle());
-                newsViewModel.insertArticleToDB(articles.get(1));
+                for (ArticlesItem a: articles) {
+                    newsViewModel.insertArticleToDB(a);
+                }
                 Log.d("MainActivity","INSERT DONE!");
             }
         });
-//
-//        newsViewModel.getFromRoomAllArticles().observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
-//            @Override
-//            public void onChanged(List<ArticlesItem> articles) {
-////                Log.d("MainActivity","db size :"+articles.size()+"Get from db: "+articles.get(0).getSource().getName());
-//            }
-//        });
+
+
+        newsViewModel.getFromRoomAllArticles().observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
+            @Override
+            public void onChanged(List<ArticlesItem> articles) {
+                Log.d("MainActivity","db size :"+articles.size());
+            }
+        });
+
+        newsViewModel.insertUser(new User("test","test"));
+        newsViewModel.insertSavedArticleToDB(new UserArticleCrossRef(1,1));
+        newsViewModel.insertSavedArticleToDB(new UserArticleCrossRef(1,2));
+        newsViewModel.getFromRoomSavedArticles(1).observe(MainActivity.this, new Observer<List<UserWithArticles>>() {
+            @Override
+            public void onChanged(List<UserWithArticles> userWithArticles) {
+                Log.d("MainActivity","get user"+userWithArticles.get(0)+" with articles ");
+            }
+        });
 
     }
 
