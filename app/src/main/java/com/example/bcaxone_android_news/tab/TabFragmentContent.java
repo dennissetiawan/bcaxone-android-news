@@ -189,15 +189,15 @@ public class TabFragmentContent extends Fragment{
             itemDataAdapter.notifyDataSetChanged();
         }
         else{
-//            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
-//            snackbar.setAction("Ok", new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    snackbar.dismiss();
-//                }
-//            });
-//            snackbar.show();
-//            articlesItemsSource.clear();
+            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    snackbar.dismiss();
+                }
+            });
+            snackbar.show();
+            articlesItemsSource.clear();
         }
     }
 

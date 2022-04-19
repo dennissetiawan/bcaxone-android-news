@@ -16,9 +16,12 @@
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/item_data.xml" value="0.36666666666666664" />
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/item_data_adapter.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/navigation_bar.xml" value="0.33" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/news_detail.xml" value="0.3489847715736041" />
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/tab_content.xml" value="0.29261363636363635" />
-        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/tab_host.xml" value="0.1" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/layout/tab_host.xml" value="0.2" />
         <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Project/bcaxone-android-news/app/src/main/res/menu/navigation_menu.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3506312052408854" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.1703125" />

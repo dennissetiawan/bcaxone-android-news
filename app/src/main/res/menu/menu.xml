@@ -16,5 +16,4 @@
         android:title="@string/logout"
         app:showAsAction="ifRoom"/>
 
-
 </menu>
