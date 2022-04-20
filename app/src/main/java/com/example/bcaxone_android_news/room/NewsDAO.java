@@ -29,7 +29,11 @@ public interface NewsDAO {
 
     @Transaction
     @Query("SELECT * FROM User WHERE userID=:userId")
-    public LiveData<List<UserWithArticles>> selectUserWithArticles(int userId);
+    public LiveData<UserWithArticles> selectUserWithArticles(int userId);
+
+
+    @Query("SELECT * FROM User WHERE userID=:userId")
+    public LiveData<User> selectUser(int userId);
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)

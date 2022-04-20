@@ -1,7 +1,6 @@
 package com.example.bcaxone_android_news;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -39,8 +38,11 @@ public class NewsViewModel extends AndroidViewModel {
     }
     
     
-    public LiveData<List<UserWithArticles>> getFromRoomSavedArticles(int userId) {
-        return newsRepository.room.getSavedArticles(userId);
+    public LiveData<UserWithArticles> getFromRoomUserSavedArticles(int userId) {
+        return newsRepository.room.getUserSavedArticles(userId);
+    }
+    public LiveData<User> getFromRoomUser(int userId) {
+        return newsRepository.room.getUser(userId);
     }
 
 

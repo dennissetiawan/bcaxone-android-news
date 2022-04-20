@@ -1,4 +1,4 @@
-package com.example.bcaxone_android_news.tab;
+package com.example.bcaxone_android_news.home;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -15,7 +15,6 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +37,6 @@ public class TabFragmentContent extends Fragment{
     private static ArrayList<ArrayList<ArticlesItem>> cacheDataArrays = new ArrayList<>();
     private  ArrayList<ArticlesItem> articlesMasterData;
     private  ArrayList<ArticlesItem> articlesItemsSource;
-    private boolean isFragmentAvail;
     private int pageNumber;
     private NewsViewModel newsViewModel;
 
@@ -132,7 +130,7 @@ public class TabFragmentContent extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.tab_content, container, false);
+        View root = inflater.inflate(R.layout.item_list_recycle_content, container, false);
         newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
         recyclerView = root.findViewById(R.id.recyclerView);
         itemDataAdapter = new ItemDataAdapter(articlesItemsSource);
@@ -189,15 +187,15 @@ public class TabFragmentContent extends Fragment{
             itemDataAdapter.notifyDataSetChanged();
         }
         else{
-//            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
-//            snackbar.setAction("Ok", new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    snackbar.dismiss();
-//                }
-//            });
-//            snackbar.show();
-//            articlesItemsSource.clear();
+            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    snackbar.dismiss();
+                }
+            });
+            snackbar.show();
+            articlesItemsSource.clear();
         }
     }
 

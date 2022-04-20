@@ -1,11 +1,9 @@
-package com.example.bcaxone_android_news.tab;
+package com.example.bcaxone_android_news.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,17 +13,12 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.bcaxone_android_news.R;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-
-import java.util.ArrayList;
-
-import model.ArticlesItem;
 
 public class TabFragment extends Fragment {
     private View root;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
-    private TabFragmentPageAdapter pagerAdapter;
+
     public String tabTitles[] = new String[]{"Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"};
 
 

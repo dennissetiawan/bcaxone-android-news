@@ -3,7 +3,6 @@ package com.example.bcaxone_android_news;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,16 +14,17 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.bcaxone_android_news.tab.TabFragment;
+import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
+import com.example.bcaxone_android_news.home.TabFragment;
 
-import java.util.ArrayList;
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.Calendar;
 import java.util.List;
 
 import model.ArticlesItem;
-import retrofit.NewsAPIKeys;
 import model.User;
 import model.UserWithArticles;
 
@@ -50,6 +50,20 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container,MenuFragment.newInstance()).commitNow();
         }
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener) item -> {
+            int id = item.getItemId();
+            Log.d("MainActivity","bottom navigation "+id);
+            switch (id){
+                case R.id.page_1:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container,TabFragment.newInstance()).commitNow();
+                    break;
+                case R.id.page_2:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, BookmarkFragment.newInstance()).commitNow();
+                    break;
+            }
+            return true;
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
             openLoginActivity();
             return;
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, TabFragment.newInstance()).commitNow();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, TabFragment.newInstance()).commitNow();
     }
     //  LOGOUT SESSION
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -111,13 +125,14 @@ public class MainActivity extends AppCompatActivity {
         newsViewModel.insertUser(new User("test","test"));
         newsViewModel.insertSavedArticleToDB(new UserArticleCrossRef(1,1));
         newsViewModel.insertSavedArticleToDB(new UserArticleCrossRef(1,2));
-        newsViewModel.getFromRoomSavedArticles(1).observe(MainActivity.this, new Observer<List<UserWithArticles>>() {
+        newsViewModel.getFromRoomUserSavedArticles(1).observe(MainActivity.this, new Observer<UserWithArticles>() {
             @Override
-            public void onChanged(List<UserWithArticles> userWithArticles) {
-                Log.d("MainActivity","get user"+userWithArticles.get(0)+" with articles ");
+            public void onChanged(UserWithArticles userWithArticles) {
+                Log.d("MainActivity","get user"+userWithArticles+" with articles ");
             }
         });
 
     }
+
 
 }

@@ -20,7 +20,7 @@ public class NewsRoomService {
     }
 
 
-    public LiveData<List<ArticlesItem>> getAllArticles(){
+    public LiveData<List<ArticlesItem>> getFromRoomAllArticles(){
         return newsDAO.selectAllArticles();
     }
 
@@ -29,8 +29,12 @@ public class NewsRoomService {
     }
 
 
-    public LiveData<List<UserWithArticles>> getSavedArticles(int userId){
+    public LiveData<UserWithArticles> getUserSavedArticles(int userId){
         return newsDAO.selectUserWithArticles(userId);
+    }
+
+    public LiveData<User> getUser(int userId){
+        return newsDAO.selectUser(userId);
     }
 
 

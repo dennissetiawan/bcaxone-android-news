@@ -14,6 +14,13 @@ public class UserWithArticles {
     @Relation(parentColumn = "userID" ,entityColumn = "articleID" ,
             associateBy = @Junction(UserArticleCrossRef.class)
     )
-    public List<ArticlesItem> articlesItemList;
+    private List<ArticlesItem> articlesItemList;
 
+    public List<ArticlesItem> getArticlesItemList() {
+        return articlesItemList;
+    }
+
+    public void setArticlesItemList(List<ArticlesItem> articlesItemList) {
+        this.articlesItemList = articlesItemList;
+    }
 }
