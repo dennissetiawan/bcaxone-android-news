@@ -34,7 +34,7 @@ public class NewsRepository {
 
     //networking
     NewsAPIService newsApiService;
-    private final String NEWS_API_KEY;
+    private String NEWS_API_KEY;
     private Map<String, String> query;
     private MutableLiveData<List<ArticlesItem>> articlesData = new MutableLiveData<>();
     private final ExecutorService networkExecutor = Executors.newFixedThreadPool(4);
@@ -47,7 +47,7 @@ public class NewsRepository {
     };
 
     public NewsRepository(Application application){
-        RetrofitInstance retrofitInstance = new RetrofitInstance();
+        RetrofitInstance retrofitInstance = new RetrofitInstance(NewsAPIService.BASE_URL);
         newsApiService = retrofitInstance.getNewsAPIService();
 
         query = new HashMap<>();

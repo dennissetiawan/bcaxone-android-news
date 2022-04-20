@@ -26,6 +26,11 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
 
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
     @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         Context context = parent.getContext();
