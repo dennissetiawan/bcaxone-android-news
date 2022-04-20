@@ -86,7 +86,6 @@ public class NewsRepository {
     }
 
 
-    //TODO: add desired query here in parameters and query.put
     public MutableLiveData<List<ArticlesItem>> getEverything(String q){
         articlesData = new MutableLiveData<>();
         query = createQuery();

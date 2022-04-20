@@ -43,6 +43,7 @@ public class LoginRepository {
     }
 
     public void doLogin(String username , String password, Callback<LoginResponse> callback){
+        //TODO: Loading screen
         RequestBody usernameBody = RequestBody.create(MediaType.parse("text/plain"), username);
         RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"), password);
         loginAPIService.loginPostRequest(LOGIN_API_KEY,usernameBody,passwordBody).enqueue(callback);

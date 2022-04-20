@@ -14,7 +14,7 @@ public class RetrofitInstance {
     private NewsAPIService newsAPIService;
     private LoginAPIService loginAPIService;
     public RetrofitInstance(String url){
-        //TODO: for what?
+
         Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
 
         Retrofit retrofit = new Retrofit.Builder()

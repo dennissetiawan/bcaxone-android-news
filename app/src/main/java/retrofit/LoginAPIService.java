@@ -34,25 +34,4 @@ public interface LoginAPIService {
     @POST("/api/user/login")
     Call<LoginResponse> loginPostRequest(@Header ("X-API-KEY") String xAPIKey,  @Part("username") RequestBody username, @Part("password") RequestBody password);
 
-
-//    public void doLogin(Callback callback){
-//        OkHttpClient client = new OkHttpClient();
-//
-//        RequestBody formBody = new FormBody.Builder()
-//                .add("username", "demo@demo.com")
-//                .add("password","demo123")
-//                .build();
-//
-//        Request request = new Request.Builder()
-//                .url("https://talentpool.oneindonesia.id/api/user/login")
-//                .addHeader("X-API-KEY","454041184B0240FBA3AACD15A1F7A8BB")
-//                .post(formBody)
-//                .build();
-//
-//        Call call = client.newCall(request);
-//        call.enqueue(callback);
-//
-//
-//        // Do something with the response.
-//    }
 }

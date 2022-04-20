@@ -7,10 +7,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SessionManagement {
-    //TODO: implement session token in login session
     public static final String SESSION_PREFERENCE = "com.example.bcaxone_android_news.SessionManagement.SESSION_PREFERENCE";
     public static final String SESSION_TOKEN = "com.example.bcaxone_android_news.SessionManagement.SESSION_TOKEN";
     public static final String SESSION_EXPIRE_TIME = "com.example.bcaxone_android_news.SessionManagement.SESSION_EXPIRE_TIME";
+    public static final String SESSION_USER_ID = "com.example.bcaxone_android_news.SessionManagement.SESSION_USER_ID";
+
 
     private static SessionManagement INSTANCE;
     public static SessionManagement getInstance(){
@@ -20,7 +21,7 @@ public class SessionManagement {
         return INSTANCE;
     }
 
-    public void startUserSession(Context context, int expiredIn,String userToken){
+    public void startUserSession(Context context, int expiredIn,String userToken, int userId){
         Calendar calendar = Calendar.getInstance();
         Date userLogginTime = calendar.getTime();
         calendar.setTime(userLogginTime);
@@ -33,6 +34,7 @@ public class SessionManagement {
 
         editor.putLong(SESSION_EXPIRE_TIME,expireTime.getTime());
         editor.putString(SESSION_TOKEN,userToken);
+        editor.putInt(SESSION_USER_ID,userId);
         editor.apply();
     }
 
@@ -40,6 +42,11 @@ public class SessionManagement {
     public boolean isSessionActive(Context context, Date currentTime){
         Date sessionExpiredAt = new Date(context.getSharedPreferences(SESSION_PREFERENCE, Context.MODE_PRIVATE).getLong(SESSION_EXPIRE_TIME,0));
         return !currentTime.after(sessionExpiredAt);
+
+    }
+
+    public int getUserInSessionId(Context context){
+        return context.getSharedPreferences(SESSION_PREFERENCE, Context.MODE_PRIVATE).getInt(SESSION_USER_ID,0);
 
     }
 
