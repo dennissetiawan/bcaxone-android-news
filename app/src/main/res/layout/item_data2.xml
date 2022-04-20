@@ -17,16 +17,16 @@
         android:layout_margin="4dp">
 
         <ImageView
-            android:id="@+id/itemdata_image_news"
-            android:layout_width="150dp"
+            android:id="@+id/itemdata_image_news2"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:adjustViewBounds="true"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemdata_textview_news_title" />
+             />
 
         <TextView
-            android:id="@+id/itemdata_textview_news_title"
+            android:id="@+id/itemdata_textview_news_title2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -37,38 +37,36 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintHorizontal_bias="0.0"
-
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/itemdata_image_news2"
             app:layout_constraintTop_toTopOf="parent"
             tools:paddingLeft="8dp"
             tools:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/itemdata_textview_news_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:maxLines="4"
-            android:text="Descriptions"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/itemdata_image_news"
-            app:layout_constraintTop_toBottomOf="@id/itemdata_textview_news_title" />
-
 <!--        <TextView-->
-<!--            android:id="@+id/itemdata_textview_news_publish"-->
+<!--            android:id="@+id/itemdata_textview_news_description"-->
 <!--            android:layout_width="0dp"-->
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_marginTop="8dp"-->
 <!--            android:layout_marginStart="8dp"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:text="Publish"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:text="Descriptions"-->
+<!--            android:maxLines="3"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
 <!--            app:layout_constraintStart_toEndOf="@+id/itemdata_image_news"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/itemdata_textview_news_title" />-->
 
-<!--            app:layout_constraintTop_toBottomOf="@id/itemdata_textview_news_description" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/itemdata_textview_news_publish"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            android:text="Publish"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/itemdata_image_news"-->
+
+        <!--            app:layout_constraintTop_toBottomOf="@id/itemdata_textview_news_description" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
