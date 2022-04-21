@@ -16,5 +16,8 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="login">Login</string>
+    <string name="no_data">No Data</string>
+    <string name="no_bookmark">No Bookmarked Articles</string>
+    <string name="three_dots">⋮</string>
 
 </resources>

@@ -15,6 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp">
+        <TextView
+            android:id="@+id/item_data_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/three_dots"
+            android:textColor="@android:color/primary_text_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="15dp"
+            />
 
         <ImageView
             android:id="@+id/itemdata_image_news"

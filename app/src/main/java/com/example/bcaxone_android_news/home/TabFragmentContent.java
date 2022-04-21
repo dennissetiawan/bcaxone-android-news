@@ -56,7 +56,6 @@ public class TabFragmentContent extends Fragment{
         articlesMasterData = new ArrayList<>();
         articlesItemsSource = new ArrayList<>();
 
-        Log.d("DSW","onCreate"+ pageAPIKeyCategories[pageNumber]);
     }
 
 
@@ -133,7 +132,7 @@ public class TabFragmentContent extends Fragment{
         View root = inflater.inflate(R.layout.item_list_recycle_content, container, false);
         newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
         recyclerView = root.findViewById(R.id.recyclerView);
-        itemDataAdapter = new ItemDataAdapter(articlesItemsSource);
+        itemDataAdapter = new ItemDataAdapter(articlesItemsSource,this);
         recyclerView.setAdapter(itemDataAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        generateDataWithoutRoom();
@@ -209,5 +208,6 @@ public class TabFragmentContent extends Fragment{
         }
         return foundItem;
     }
+
 
 }

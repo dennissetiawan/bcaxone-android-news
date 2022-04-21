@@ -39,6 +39,9 @@ public interface NewsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(UserArticleCrossRef userArticleCrossRef);
 
+    @Delete
+    void delete(UserArticleCrossRef userArticleCrossRef);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 

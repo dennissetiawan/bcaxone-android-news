@@ -12,6 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!-- Bottom dialog -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Bcaxoneandroidnews.BottomSheetDialog</item>
     </style>
 
     <style name="Theme.Bcaxoneandroidnews.NoActionBar">
@@ -19,6 +22,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ThemeOverlay.Bcaxoneandroidnews.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
     <style name="Theme.Bcaxoneandroidnews.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Bcaxoneandroidnews.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

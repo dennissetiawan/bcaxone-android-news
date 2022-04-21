@@ -41,6 +41,9 @@ public class NewsRoomService {
     public void insert(UserArticleCrossRef userArticleCrossRef){
         AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(userArticleCrossRef));
     }
+    public void delete(UserArticleCrossRef userArticleCrossRef){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.delete(userArticleCrossRef));
+    }
 
     public void insert(User user){
         AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(user));
