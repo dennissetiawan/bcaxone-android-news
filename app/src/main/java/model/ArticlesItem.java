@@ -1,6 +1,8 @@
 package model;
 
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
@@ -52,6 +54,12 @@ public class ArticlesItem{
 	@ColumnInfo(name = "content")
 	@SerializedName("content")
 	private String content;
+
+	@ColumnInfo(name = "category")
+	private String category;
+
+	@Ignore
+	private Bitmap imageBitmap;
 
 	public int getArticleID() {
 		return articleID;
@@ -124,5 +132,21 @@ public class ArticlesItem{
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public Bitmap getImageBitmap() {
+		return imageBitmap;
+	}
+
+	public void setImageBitmap(Bitmap imageBitmap) {
+		this.imageBitmap = imageBitmap;
 	}
 }

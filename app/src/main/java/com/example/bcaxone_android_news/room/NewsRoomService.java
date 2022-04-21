@@ -20,13 +20,21 @@ public class NewsRoomService {
     }
 
 
-    public LiveData<List<ArticlesItem>> getAllArticles(){
+    public LiveData<List<ArticlesItem>> getFromRoomAllArticles(){
         return newsDAO.selectAllArticles();
     }
 
+    public LiveData<List<ArticlesItem>> getFromRoomArticlesWithCategory(String category){
+        return newsDAO.selectArticlesWithCategory(category);
+    }
 
-    public LiveData<List<UserWithArticles>> getSavedArticles(int userId){
+
+    public LiveData<UserWithArticles> getUserSavedArticles(int userId){
         return newsDAO.selectUserWithArticles(userId);
+    }
+
+    public LiveData<User> getUser(int userId){
+        return newsDAO.selectUser(userId);
     }
 
 
@@ -40,6 +48,10 @@ public class NewsRoomService {
 
     public void insert(ArticlesItem articlesItem){
         AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(articlesItem));
+    }
+
+    public void insert(List<ArticlesItem> articlesItemList){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(articlesItemList));
     }
 
     public void update(ArticlesItem articlesItem){

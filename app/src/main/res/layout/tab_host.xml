@@ -11,18 +11,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabMode="scrollable"
+        app:tabMode="auto"
         android:contentDescription="@string/description_news_categories"
         />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/tab_viewpager"
+    <FrameLayout
+        android:id="@+id/tab_content_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout_categories"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_categories"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

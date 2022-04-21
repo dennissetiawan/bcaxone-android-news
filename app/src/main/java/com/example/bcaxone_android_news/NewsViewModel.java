@@ -34,16 +34,28 @@ public class NewsViewModel extends AndroidViewModel {
         return articleData;
     }
     public LiveData<List<ArticlesItem>> getFromRoomAllArticles() {
-        return newsRepository.room.getAllArticles();
+        return newsRepository.room.getFromRoomAllArticles();
+    }
+    
+    
+    public LiveData<UserWithArticles> getFromRoomUserSavedArticles(int userId) {
+        return newsRepository.room.getUserSavedArticles(userId);
+    }
+    public LiveData<User> getFromRoomUser(int userId) {
+        return newsRepository.room.getUser(userId);
     }
 
 
-    public LiveData<List<UserWithArticles>> getFromRoomSavedArticles(int userId) {
-        return newsRepository.room.getSavedArticles(userId);
+    public LiveData<List<ArticlesItem>> getFromRoomArticlesWithCategory(String category) {
+        return newsRepository.room.getFromRoomArticlesWithCategory(category);
     }
 
     public void insertArticleToDB(ArticlesItem articlesItem) {
         newsRepository.room.insert(articlesItem);
+    }
+
+    public void insertArticleListToDB(List<ArticlesItem> articlesItemList) {
+        newsRepository.room.insert(articlesItemList);
     }
 
 
