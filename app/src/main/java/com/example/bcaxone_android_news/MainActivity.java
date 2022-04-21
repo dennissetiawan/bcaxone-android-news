@@ -3,17 +3,15 @@ package com.example.bcaxone_android_news;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
+
 import android.widget.SearchView;
 
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
@@ -21,32 +19,21 @@ import com.example.bcaxone_android_news.home.HomeFragment;
 
 import com.example.bcaxone_android_news.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.Calendar;
-import java.util.List;
-
-import model.ArticlesItem;
-import model.User;
-import model.UserWithArticles;
 
 public class MainActivity extends AppCompatActivity {
-
-    private NewsViewModel newsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener) item -> {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             Log.d("MainActivity","bottom navigation "+id);
             switch (id){
@@ -68,17 +55,11 @@ public class MainActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         SearchView sv = (SearchView) menu.findItem(R.id.item_search).getActionView();
 
-        sv.setOnCloseListener(() -> {
-            Log.d("MainActivity","search close");
-//            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
-//            hideKeyboard();
-            sv.clearFocus();
-            return true;
-        });
         sv.setOnSearchClickListener(view -> {
             SearchFragment searchFragment = new SearchFragment();
             Log.d("MainActivity","search click");
             sv.setOnQueryTextListener(searchFragment);
+            sv.setOnCloseListener(searchFragment);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, searchFragment).commitNow();
         });
 
@@ -103,20 +84,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
     }
 
-
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    }
-
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item_logout:
-                SessionManagement.getInstance().endUserSession(MainActivity.this);
-                openLoginActivity();
-                return true;
-            default: return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.item_logout) {
+            SessionManagement.getInstance().endUserSession(MainActivity.this);
+            openLoginActivity();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void openLoginActivity() {

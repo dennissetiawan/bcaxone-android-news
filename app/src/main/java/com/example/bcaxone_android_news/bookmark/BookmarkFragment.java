@@ -50,6 +50,7 @@ public class BookmarkFragment extends Fragment {
      public void reloadData() {
         int userId = SessionManagement.getInstance().getUserInSessionId(getContext());
         Log.d("BookmarkFragment", "get shared article for user id : "+userId);
+         errorTextView.setVisibility(View.INVISIBLE);
         newsViewModel.getFromRoomUserSavedArticles(userId).observe(getViewLifecycleOwner(), userWithArticles -> {
             Log.d("BookmarkFragment", "userwitharticles called");
             if(userWithArticles == null || userWithArticles.getArticlesItemList().isEmpty()) {

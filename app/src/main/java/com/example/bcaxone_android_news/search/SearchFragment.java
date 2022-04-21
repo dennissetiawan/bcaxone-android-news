@@ -1,9 +1,8 @@
 package com.example.bcaxone_android_news.search;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,16 +23,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bcaxone_android_news.NewsViewModel;
 import com.example.bcaxone_android_news.R;
-import com.example.bcaxone_android_news.SessionManagement;
+
 import com.example.bcaxone_android_news.adapter.ItemDataAdapter;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.bcaxone_android_news.home.HomeFragment;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import model.ArticlesItem;
 
-public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener{
     NewsViewModel newsViewModel;
     RecyclerView recyclerView;
     ItemDataAdapter itemDataAdapter;
@@ -51,7 +51,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         itemDataAdapter = new ItemDataAdapter(articlesItemsSource,this);
         recyclerView.setAdapter(itemDataAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        reloadData();
         return root;
     }
 
@@ -73,7 +72,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
 
     private void doSearchItems(String query) {
-
+        errorTextView.setVisibility(View.INVISIBLE);
         newsViewModel.getFromRoomArticlesWithTitleContains(query).observe(getViewLifecycleOwner(), new Observer<List<ArticlesItem>>() {
             @Override
             public void onChanged(List<ArticlesItem> articlesItems) {
@@ -81,7 +80,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                 if(!articlesItems.isEmpty()){
                     articlesItemsSource.addAll(articlesItems);
                 }else{
-                    showErrorToast();
+                    showErrorNotFound(query);
                 }
                 hideKeyboard();
                 itemDataAdapter.notifyDataSetChanged();
@@ -90,15 +89,10 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     }
 
-    private void showErrorToast() {
-        final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"No news found with that title",Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("Ok", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.show();
+    private void showErrorNotFound(String query) {
+        Log.d("SearchFragment", "userwitharticles not found");
+        errorTextView.setText(String.format("%s %s", getString(R.string.no_article_with_title), query));
+        errorTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -117,4 +111,12 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
 
+    @Override
+    public boolean onClose() {
+        Log.d("SearchFragment","search close");
+        hideKeyboard();
+        getParentFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
+        return false;
+
+    }
 }

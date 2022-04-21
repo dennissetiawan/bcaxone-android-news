@@ -18,6 +18,8 @@
     <string name="login">Login</string>
     <string name="no_data">No Data</string>
     <string name="no_bookmark">No Bookmarked Articles</string>
+
     <string name="three_dots">⋮</string>
+    <string name="no_article_with_title">No article found with title</string>
 
 </resources>
