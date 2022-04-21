@@ -3,6 +3,7 @@ package com.example.bcaxone_android_news;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -23,11 +24,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-
+    private NewsViewModel newsViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
