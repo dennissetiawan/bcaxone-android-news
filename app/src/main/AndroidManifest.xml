@@ -10,7 +10,7 @@
         android:label="News Application"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Bcaxoneandroidnews">
+        android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".LoginActivity"
             android:exported="true" />

@@ -10,6 +10,7 @@
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +24,7 @@
         android:gravity="center_vertical"
         android:textSize="15sp"
         android:textStyle="bold"
+        app:textAllCaps="true"
         android:background="@color/design_default_color_background"
         android:text="Category News"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,11 +33,13 @@
 
     <ImageButton
         android:id="@+id/fragment_news_detail_imagebutton_bookmark"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_bookmark_blank"
+
+        android:src="@drawable/icons8_add_bookmark_20"
+        android:background="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_news_detail_textview_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -48,26 +52,29 @@
         android:id="@+id/fragment_news_detail_textview_publish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
-        android:text="Publish"
+        android:text=" Publish"
+        android:textSize="12dp"
         app:drawableLeftCompat="@drawable/icons8_clock_15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_news_detail_textview_category"
+        app:layout_constraintStart_toEndOf="@+id/fragment_news_detail_textview_category"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_news_detail_imageview"
         tools:ignore="HardcodedText" />
 
 
     <TextView
         android:id="@+id/fragment_news_detail_textview_author"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
+        android:maxLines="2"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Author"
-        app:drawableLeftCompat="@drawable/icons8_person_15"
-        app:layout_constraintStart_toEndOf="@id/fragment_news_detail_textview_publish"
+        app:drawableLeftCompat="@drawable/icons8_writer_male_15"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_news_detail_textview_category"
         tools:ignore="HardcodedText" />
 
@@ -85,17 +92,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_news_detail_textview_publish"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_news_detail_textview_author"
         tools:paddingLeft="8dp"
         tools:textStyle="bold"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/fragment_news_detail_textview_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
+        android:maxLength="10000"
         android:layout_marginEnd="8dp"
         android:text="Descriptions"
         app:layout_constraintEnd_toEndOf="parent"

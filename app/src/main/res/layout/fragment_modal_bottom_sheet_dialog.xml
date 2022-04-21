@@ -60,7 +60,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="32dp"
-            android:src="@android:drawable/star_off"
+            android:src="@drawable/icons8_add_bookmark_50"
             app:tint="#737373" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/bookmark"
+            android:text="Bookmark this News"
             android:textColor="#737373"
             android:textSize="16sp" />
 

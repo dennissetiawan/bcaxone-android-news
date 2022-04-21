@@ -47,7 +47,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             ImageView imageView = root.findViewById(R.id.bottom_sheet_bookmark_imageview);
             TextView textView = root.findViewById(R.id.bottom_sheet_bookmark_textview);
             textView.setText("Remove from Bookmark");
-            imageView.setImageResource(android.R.drawable.star_on);
+            imageView.setImageResource(R.drawable.icons8_delete_bookmark_50);
+
         }
 
         BottomSheetFragment fragment = this;
@@ -70,7 +71,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     private void deleteBookmark(int userId,int articleId) {
         newsRepository.room.delete(new UserArticleCrossRef(userId,articleId));
-        Toast.makeText(getContext(),"Delete Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"Remove from Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
         ((BookmarkFragment) fromFragment).reloadData();
     }
 }
