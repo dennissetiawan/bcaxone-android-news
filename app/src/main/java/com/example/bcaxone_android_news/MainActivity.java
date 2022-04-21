@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.util.Log;
-
+import android.view.View;
 import android.widget.SearchView;
 
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
@@ -20,30 +20,37 @@ import com.example.bcaxone_android_news.home.HomeFragment;
 
 import com.example.bcaxone_android_news.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
     private NewsViewModel newsViewModel;
+    BottomNavigationView bottomNavigationView;
+    public static boolean isHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        isHome = true;
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             Log.d("MainActivity","bottom navigation "+id);
             switch (id){
                 case R.id.page_1:
+                    isHome = true;
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment()).commitNow();
                     break;
                 case R.id.page_2:
+                    isHome = false;
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new BookmarkFragment()).commitNow();
                     break;
             }
@@ -64,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             sv.setOnQueryTextListener(searchFragment);
             sv.setOnCloseListener(searchFragment);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, searchFragment).commitNow();
+            isHome = false;
         });
 
         sv.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -104,11 +112,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if(!isHome){
+            isHome = true;
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment())
+                    .commitNow();
+            bottomNavigationView.setVisibility(View.VISIBLE);
 
-        if(getSupportFragmentManager().getBackStackEntryCount() > 0){
-            getSupportFragmentManager().popBackStackImmediate();
-        }else {
-            Log.d("MainActivity","super back pressed");
+        }else{
             super.onBackPressed();
         }
     }

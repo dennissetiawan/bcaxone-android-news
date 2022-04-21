@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bcaxone_android_news.BottomSheetFragment;
 
+import com.example.bcaxone_android_news.MainActivity;
 import com.example.bcaxone_android_news.NewsDetailFragment;
 
 import com.example.bcaxone_android_news.R;
@@ -105,6 +106,7 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
                         .replace(R.id.main_container, newsDetailActivity)
 //                        .addToBackStack(null)
                         .commitNow();
+                MainActivity.isHome = false;
             }
         }
     }
