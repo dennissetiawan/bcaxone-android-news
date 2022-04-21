@@ -1,6 +1,7 @@
 package com.example.bcaxone_android_news;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -52,6 +53,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         TextView textView = root.findViewById(R.id.bottom_sheet_bookmark_textview);
         ImageView imageView = root.findViewById(R.id.bottom_sheet_bookmark_imageview);
         View bookmarkItem = root.findViewById(R.id.bottom_sheet_bookmark);
+        View shareItem = root.findViewById(R.id.bottom_sheet_share);
+
+        shareItem.setOnClickListener(view -> share());
 
         newsRepository.room.getUserSavedArticles(userId).observe(getViewLifecycleOwner(), userWithArticles -> {
             List<ArticlesItem> savedArticles = userWithArticles.getArticlesItemList();
@@ -99,5 +103,14 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         if(fromFragment instanceof BookmarkFragment) {
             ((BookmarkFragment) fromFragment).reloadData();
         }
+    }
+
+    private void share(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = String.format("%s\n %s \n%s", item.getTitle(),item.getDescription(), item.getUrl());
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "News Sharing");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }

@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(!isHome){
             isHome = true;
-
             bottomNavigationView.setVisibility(View.VISIBLE);
             bottomNavigationView.setSelectedItemId(R.id.page_1);
 
