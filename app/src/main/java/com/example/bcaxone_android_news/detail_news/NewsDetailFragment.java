@@ -89,8 +89,8 @@ public class NewsDetailFragment extends Fragment {
         titleNewsDetailTextView.setText(articlesItem.getTitle());
         descNewsDetailTextView.setText(articlesItem.getDescription());
         categoryNewsDetailTextView.setText(articlesItem.getCategory());
-        authorDetailTextView.setText(articlesItem.getAuthor());
-        publishDetailTextView.setText(articlesItem.getPublishedAt());
+        authorDetailTextView.setText(" "+articlesItem.getAuthor());
+        publishDetailTextView.setText(" "+articlesItem.getPublishedAt());
         Picasso.with(imageViewDetail.getContext()).load(articlesItem.getUrlToImage()).noPlaceholder().error(R.drawable.icons8_no_image_100).into(imageViewDetail);
 
         return root;
