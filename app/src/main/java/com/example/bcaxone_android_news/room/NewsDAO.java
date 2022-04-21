@@ -28,6 +28,11 @@ public interface NewsDAO {
     LiveData<List<ArticlesItem>> selectArticlesWithCategory(String category);
 
     @Transaction
+    @Query("SELECT * FROM Articles WHERE lower(title) LIKE lower('%'||:title||'%') ")
+    LiveData<List<ArticlesItem>> selectArticlesWithTitleContains(String title);
+
+
+    @Transaction
     @Query("SELECT * FROM User WHERE userID=:userId")
     public LiveData<UserWithArticles> selectUserWithArticles(int userId);
 

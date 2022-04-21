@@ -31,10 +31,6 @@ public class BookmarkFragment extends Fragment {
     TextView errorTextView;
     private  ArrayList<ArticlesItem> articlesItemsSource = new ArrayList<>();
 
-    public static BookmarkFragment newInstance() {
-        BookmarkFragment bookmarkFragment = new BookmarkFragment();
-        return bookmarkFragment;
-    }
 
     @Nullable
     @Override

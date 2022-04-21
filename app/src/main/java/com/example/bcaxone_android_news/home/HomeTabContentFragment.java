@@ -1,16 +1,10 @@
 package com.example.bcaxone_android_news.home;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,38 +44,11 @@ public class HomeTabContentFragment extends Fragment{
     @Override
     public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-
-
         articlesMasterData = new ArrayList<>();
         articlesItemsSource = new ArrayList<>();
 
     }
 
-
-    private void generateDataWithoutRoom() {
-        if(cacheDataArrays.isEmpty()){
-            for (int i = 0; i < 7; i++) {
-                cacheDataArrays.add(new ArrayList<>());
-            }
-        }
-
-        if(cacheDataArrays.get(pageNumber).size()==0){
-            newsViewModel.getArticleDataTopHeadlines(pageAPIKeyCategories[pageNumber],NewsAPIKeys.COUNTRY_US)
-                    .observe(getViewLifecycleOwner(), articlesItemsFromAPI -> {
-
-                        cacheDataArrays.set(pageNumber, (ArrayList<ArticlesItem>) articlesItemsFromAPI);
-
-                        articlesMasterData.clear();
-                        articlesMasterData.addAll(articlesItemsFromAPI);
-                        resetData();
-                    });
-        }else{
-            articlesMasterData.clear();
-            articlesMasterData.addAll(cacheDataArrays.get(pageNumber));
-            resetData();
-        }
-    }
 
     private void generateData() {
         Log.d("TabFragmentContent","generateData()"+ pageAPIKeyCategories[pageNumber]);
@@ -140,35 +107,6 @@ public class HomeTabContentFragment extends Fragment{
         return root;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        initSearchView(menu);
-    }
-
-    private void initSearchView(Menu menu) {
-        SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView sv = (SearchView) menu.findItem(R.id.item_search).getActionView();
-        sv.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
-        sv.setIconifiedByDefault(true);
-        sv.setMaxWidth(Integer.MAX_VALUE);
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                notifyLists(s);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if(TextUtils.isEmpty(s)){
-                    resetData();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
 
     private void resetData() {
         Log.d("TabFragmentContent","reset data" + articlesMasterData.size());
@@ -178,35 +116,31 @@ public class HomeTabContentFragment extends Fragment{
 
     }
 
-    private void notifyLists(String query) {
-        ArticlesItem articles_Item = doSearchItems(query);
-        if(articles_Item != null){
-            articlesItemsSource.clear();
-            articlesItemsSource.addAll(articlesMasterData);
-            itemDataAdapter.notifyDataSetChanged();
-        }
-        else{
-            final Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.recyclerView),"Data tidak dapat ditemukan",Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction("Ok", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    snackbar.dismiss();
-                }
-            });
-            snackbar.show();
-            articlesItemsSource.clear();
-        }
-    }
 
-    private ArticlesItem doSearchItems(String query) {
-        ArticlesItem foundItem = null;
-        for (ArticlesItem item:articlesItemsSource){
-            if(item.getTitle().toLowerCase().contains(query.toLowerCase())){
-                foundItem = item;
-                break;
+
+    /*************************************************/
+    private void generateDataWithoutRoom() {
+        if(cacheDataArrays.isEmpty()){
+            for (int i = 0; i < 7; i++) {
+                cacheDataArrays.add(new ArrayList<>());
             }
         }
-        return foundItem;
+
+        if(cacheDataArrays.get(pageNumber).size()==0){
+            newsViewModel.getArticleDataTopHeadlines(pageAPIKeyCategories[pageNumber],NewsAPIKeys.COUNTRY_US)
+                    .observe(getViewLifecycleOwner(), articlesItemsFromAPI -> {
+
+                        cacheDataArrays.set(pageNumber, (ArrayList<ArticlesItem>) articlesItemsFromAPI);
+
+                        articlesMasterData.clear();
+                        articlesMasterData.addAll(articlesItemsFromAPI);
+                        resetData();
+                    });
+        }else{
+            articlesMasterData.clear();
+            articlesMasterData.addAll(cacheDataArrays.get(pageNumber));
+            resetData();
+        }
     }
 
 

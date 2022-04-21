@@ -3,21 +3,23 @@ package com.example.bcaxone_android_news;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
 import com.example.bcaxone_android_news.home.HomeFragment;
 
-import com.example.bcaxone_android_news.room.UserArticleCrossRef;
+import com.example.bcaxone_android_news.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -30,25 +32,18 @@ import model.UserWithArticles;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean isFragmentAvail;
     private NewsViewModel newsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        isFragmentAvail = false;
 
-//        TextView textView = findViewById(R.id.textview_hello);
+
         newsViewModel = new ViewModelProvider(MainActivity.this).get(NewsViewModel.class);
 
-//        testAPIandRoom(textView);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container,MenuFragment.newInstance()).commitNow();
-        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener) item -> {
@@ -59,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment()).commitNow();
                     break;
                 case R.id.page_2:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, BookmarkFragment.newInstance()).commitNow();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new BookmarkFragment()).commitNow();
                     break;
             }
             return true;
@@ -69,6 +64,30 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        SearchView sv = (SearchView) menu.findItem(R.id.item_search).getActionView();
+
+        sv.setOnCloseListener(() -> {
+            Log.d("MainActivity","search close");
+//            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
+//            hideKeyboard();
+            sv.clearFocus();
+            return true;
+        });
+        sv.setOnSearchClickListener(view -> {
+            SearchFragment searchFragment = new SearchFragment();
+            Log.d("MainActivity","search click");
+            sv.setOnQueryTextListener(searchFragment);
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, searchFragment).commitNow();
+        });
+
+        sv.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        sv.setIconifiedByDefault(true);
+        sv.setMaxWidth(Integer.MAX_VALUE);
+
+
+
         return true;
     }
     //  LOGIN SESSION
@@ -83,7 +102,13 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
     }
-    //  LOGOUT SESSION
+
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_logout:
@@ -100,45 +125,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    private void testAPIandRoom(TextView textView) {
-        newsViewModel.getArticleDataTopHeadlines("sports","id").observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
-            @Override
-            public void onChanged(List<ArticlesItem> articles) {
-                Log.d("MainActivity","testapionchanged");
-                textView.setText(articles.get(0).getTitle());
-                for (ArticlesItem a: articles) {
-                    newsViewModel.insertArticleToDB(a);
-                }
-                Log.d("MainActivity","INSERT DONE!");
-            }
-        });
-
-
-        newsViewModel.getFromRoomAllArticles().observe(MainActivity.this, new Observer<List<ArticlesItem>>() {
-            @Override
-            public void onChanged(List<ArticlesItem> articles) {
-                Log.d("MainActivity","db size :"+articles.size());
-            }
-        });
-
-        newsViewModel.insertUser(new User("test","test"));
-        newsViewModel.insertSavedArticleToDB(new UserArticleCrossRef(1,1));
-        newsViewModel.insertSavedArticleToDB(new UserArticleCrossRef(1,2));
-        newsViewModel.getFromRoomUserSavedArticles(1).observe(MainActivity.this, new Observer<UserWithArticles>() {
-            @Override
-            public void onChanged(UserWithArticles userWithArticles) {
-                Log.d("MainActivity","get user"+userWithArticles+" with articles ");
-            }
-        });
-
-    }
-
     @Override
     public void onBackPressed() {
 
-        if(getFragmentManager().getBackStackEntryCount() > 0){
-            getFragmentManager().popBackStackImmediate();
+        if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+            getSupportFragmentManager().popBackStackImmediate();
         }else {
             Log.d("MainActivity","super back pressed");
             super.onBackPressed();

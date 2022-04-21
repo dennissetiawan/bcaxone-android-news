@@ -28,6 +28,10 @@ public class NewsRoomService {
         return newsDAO.selectArticlesWithCategory(category);
     }
 
+    public LiveData<List<ArticlesItem>> getFromRoomArticlesWithTitleContains(String title){
+        return newsDAO.selectArticlesWithTitleContains(title);
+    }
+
 
     public LiveData<UserWithArticles> getUserSavedArticles(int userId){
         return newsDAO.selectUserWithArticles(userId);
