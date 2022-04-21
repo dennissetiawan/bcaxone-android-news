@@ -1,6 +1,5 @@
 package com.example.bcaxone_android_news.bookmark;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bcaxone_android_news.NewsViewModel;
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.SessionManagement;
-import com.example.bcaxone_android_news.recycler.ItemDataAdapter;
+import com.example.bcaxone_android_news.adapter.ItemDataAdapter;
 
 import java.util.ArrayList;
 

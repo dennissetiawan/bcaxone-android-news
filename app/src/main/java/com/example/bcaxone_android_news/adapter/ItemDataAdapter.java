@@ -1,7 +1,7 @@
-package com.example.bcaxone_android_news.recycler;
+package com.example.bcaxone_android_news.adapter;
 
 import android.content.Context;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bcaxone_android_news.BottomSheetFragment;
+
+import com.example.bcaxone_android_news.NewsDetailFragment;
+
 import com.example.bcaxone_android_news.R;
-import com.example.bcaxone_android_news.repository.NewsRepository;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,8 +26,7 @@ import java.util.ArrayList;
 import model.ArticlesItem;
 
 public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHolder>{
-    //TODO: Delete
-    String imageNewsURL;
+    String imageNewsURL,newsDesc;
     private ArrayList<ArticlesItem> items;
     Context context;
     Fragment fromFragment;
@@ -48,7 +48,7 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_data,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view,viewType);
         viewHolder.imageView.setImageBitmap(null);
         return viewHolder;
     }
@@ -61,21 +61,18 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position){
         ArticlesItem item = items.get(position);
         imageNewsURL = item.getUrlToImage();
-
-
-        Picasso.with(holder.imageView.getContext()).load(imageNewsURL).into(holder.imageView);
-        //TODO: default image
+        String descNews;
+        descNews = item.getDescription();
 
         holder.titleNewsTextView.setText(item.getTitle());
-        holder.descNewsTextView.setText(item.getDescription());
-        holder.publishDateTextView.setText(item.getPublishedAt());
+        holder.descNewsTextView.setText(descNews);
+        Picasso.with(holder.imageView.getContext()).load(imageNewsURL).error(R.drawable.icons8_no_image_100).placeholder(R.drawable.icons8_buffering_96).into(holder.imageView);
         holder.threeDotsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheetDialog(item);
             }
         });
-
     }
 
     @Override
@@ -84,19 +81,17 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView titleNewsTextView, publishDateTextView, descNewsTextView, threeDotsTextView;
-        private ImageView imageView;
-        public ViewHolder(View itemView) {
+        private TextView titleNewsTextView, descNewsTextView, descNewsDetail, titleNewsDetail, categoryNewsDetail,authorDetail,publishDetail, threeDotsTextView;
+        private ImageView imageView, imageViewDetail;
+
+        public ViewHolder(View itemView, int viewType) {
             super(itemView);
             titleNewsTextView = itemView.findViewById(R.id.itemdata_textview_news_title);
-            publishDateTextView = itemView.findViewById(R.id.itemdata_textview_news_publish);
             descNewsTextView = itemView.findViewById(R.id.itemdata_textview_news_description);
             imageView = itemView.findViewById(R.id.itemdata_image_news);
             threeDotsTextView = itemView.findViewById(R.id.item_data_more);
 
             itemView.setOnClickListener(this);
-
-
         }
 
         @Override
@@ -104,10 +99,16 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 ArticlesItem item = items.get(position);
-                Snackbar.make(view,"Title News : " + titleNewsTextView.getText(),Snackbar.LENGTH_SHORT).show();
+                NewsDetailFragment newsDetailActivity = new NewsDetailFragment(item);
+                FragmentManager fragmentManager = fromFragment.getParentFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, newsDetailActivity)
+//                        .addToBackStack(null)
+                        .commitNow();
             }
         }
-
     }
+
+
 
 }

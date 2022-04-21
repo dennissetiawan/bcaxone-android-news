@@ -15,7 +15,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
-import com.example.bcaxone_android_news.home.TabFragment;
+import com.example.bcaxone_android_news.home.HomeFragment;
 
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity","bottom navigation "+id);
             switch (id){
                 case R.id.page_1:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container,TabFragment.newInstance()).commitNow();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment()).commitNow();
                     break;
                 case R.id.page_2:
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container, BookmarkFragment.newInstance()).commitNow();
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, TabFragment.newInstance()).commitNow();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
     }
     //  LOGOUT SESSION
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -134,5 +134,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
 
+        if(getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStackImmediate();
+        }else {
+            Log.d("MainActivity","super back pressed");
+            super.onBackPressed();
+        }
+    }
 }

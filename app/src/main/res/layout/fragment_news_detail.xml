@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/itemdata_image_news"
+        android:id="@+id/fragment_news_detail_imageview"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="8dp"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/itemdata_textview_news_category"
+        android:id="@+id/fragment_news_detail_textview_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -26,23 +26,25 @@
         android:background="@color/design_default_color_background"
         android:text="Category News"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemdata_image_news" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_news_detail_imageview"
+        tools:ignore="HardcodedText" />
 
     <ImageButton
-        android:id="@+id/itemdata_bookmark_news"
+        android:id="@+id/fragment_news_detail_imagebutton_bookmark"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/icons8_bookmark_20"
-        app:layout_constraintBottom_toBottomOf="@+id/itemdata_textview_news_category"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/icons8_add_bookmark_30"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_news_detail_textview_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/itemdata_textview_news_category"
-        app:layout_constraintTop_toBottomOf="@id/itemdata_image_news"
+        app:layout_constraintStart_toEndOf="@+id/fragment_news_detail_textview_category"
+        app:layout_constraintTop_toBottomOf="@id/fragment_news_detail_imageview"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/itemdata_textview_news_publish"
+        android:id="@+id/fragment_news_detail_textview_publish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -51,11 +53,12 @@
         android:text="Publish"
         app:drawableLeftCompat="@drawable/icons8_clock_15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemdata_textview_news_category" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_news_detail_textview_category"
+        tools:ignore="HardcodedText" />
 
 
     <TextView
-        android:id="@+id/itemdata_textview_news_author"
+        android:id="@+id/fragment_news_detail_textview_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -63,11 +66,12 @@
         android:gravity="center_vertical"
         android:text="Author"
         app:drawableLeftCompat="@drawable/icons8_person_15"
-        app:layout_constraintStart_toEndOf="@id/itemdata_textview_news_publish"
-        app:layout_constraintTop_toBottomOf="@id/itemdata_textview_news_category" />
+        app:layout_constraintStart_toEndOf="@id/fragment_news_detail_textview_publish"
+        app:layout_constraintTop_toBottomOf="@id/fragment_news_detail_textview_category"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/itemdata_textview_news_title"
+        android:id="@+id/fragment_news_detail_textview_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -80,12 +84,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemdata_textview_news_publish"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_news_detail_textview_publish"
         tools:paddingLeft="8dp"
-        tools:textStyle="bold" />
+        tools:textStyle="bold"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/itemdata_textview_news_description"
+        android:id="@+id/fragment_news_detail_textview_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -94,7 +99,8 @@
         android:text="Descriptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemdata_textview_news_title" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_news_detail_textview_title"
+        tools:ignore="HardcodedText" />
 
 
 

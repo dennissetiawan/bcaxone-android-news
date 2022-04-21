@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bcaxone_android_news.NewsViewModel;
 import com.example.bcaxone_android_news.R;
-import com.example.bcaxone_android_news.recycler.ItemDataAdapter;
+import com.example.bcaxone_android_news.adapter.ItemDataAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.List;
 import model.ArticlesItem;
 import retrofit.NewsAPIKeys;
 
-public class TabFragmentContent extends Fragment{
+public class HomeTabContentFragment extends Fragment{
 
     private RecyclerView recyclerView;
     private ItemDataAdapter itemDataAdapter;
@@ -43,7 +43,7 @@ public class TabFragmentContent extends Fragment{
     public static String pageAPIKeyCategories[] = new String[]{NewsAPIKeys.CATEGORY_BUSINESS, NewsAPIKeys.CATEGORY_ENTERTAINMENT, NewsAPIKeys.CATEGORY_GENERAL,
             NewsAPIKeys.CATEGORY_HEALTH, NewsAPIKeys.CATEGORY_SCIENCE, NewsAPIKeys.CATEGORY_SPORTS, NewsAPIKeys.CATEGORY_TECHNOLOGY};
 
-    public TabFragmentContent(int position) {
+    public HomeTabContentFragment(int position) {
         pageNumber = position;
     }
 
