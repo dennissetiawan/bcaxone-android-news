@@ -97,7 +97,7 @@ public class NewsDetailFragment extends Fragment {
     }
 
     private void setBookmarkedState(){
-        bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_blue);
+        bookmarkImageButton.setImageResource(R.drawable.bookmark__2_);
         bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +107,7 @@ public class NewsDetailFragment extends Fragment {
     }
 
     private void setNotBookmarkedState(){
-        bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_blank);
+        bookmarkImageButton.setImageResource(R.drawable.bookmark__1_);
         bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +125,7 @@ public class NewsDetailFragment extends Fragment {
 
     private void deleteBookmark(int userId,int articleId) {
         newsRepository.room.delete(new UserArticleCrossRef(userId,articleId));
-        Toast.makeText(getContext(),"Delete Bookmark " +articlesItem.getTitle(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"Remove from Bookmark " +articlesItem.getTitle(),Toast.LENGTH_LONG).show();
         setNotBookmarkedState();
     }
 
