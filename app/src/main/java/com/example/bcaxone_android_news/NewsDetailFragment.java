@@ -14,9 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
 import com.example.bcaxone_android_news.repository.NewsRepository;
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import model.ArticlesItem;
 
@@ -26,6 +29,8 @@ public class NewsDetailFragment extends Fragment {
     private ImageView imageViewDetail;
     private ImageButton bookmarkImageButton;
     private NewsRepository newsRepository;
+    private boolean isBookmarked;
+    private int userId;
     public NewsDetailFragment(ArticlesItem articlesItem) {
         this.articlesItem = articlesItem;
     }
@@ -34,22 +39,8 @@ public class NewsDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isBookmarked = false;
         newsRepository = new NewsRepository(requireActivity().getApplication());
-
-
-//        getActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//
-//                Log.d("NewsDetailFragment","press back");
-//                getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
-//                getActivity().onBackPressed();
-////                getActivity().getSupportFragmentManager().popBackStack();
-//
-//            }
-//        });
-
-
     }
 
     @Nullable
@@ -67,10 +58,29 @@ public class NewsDetailFragment extends Fragment {
         publishDetailTextView = root.findViewById(R.id.fragment_news_detail_textview_publish);
         imageViewDetail = root.findViewById(R.id.fragment_news_detail_imageview);
         bookmarkImageButton = root.findViewById(R.id.fragment_news_detail_imagebutton_bookmark);
-        bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        userId =SessionManagement.getInstance().getUserInSessionId(requireContext());
 
+
+        newsRepository.room.getUserSavedArticles(userId).observe(getViewLifecycleOwner(), userWithArticles -> {
+            List<ArticlesItem> savedArticles = userWithArticles.getArticlesItemList();
+            for (ArticlesItem a: savedArticles) {
+                if(a.getArticleID()==articlesItem.getArticleID()){
+                    isBookmarked = true;
+                    setBookmarkedState();
+                    return;
+                }
+            }
+            isBookmarked = false;
+            setNotBookmarkedState();
+        });
+
+
+
+        bookmarkImageButton.setOnClickListener(view -> {
+            if(isBookmarked){
+                deleteBookmark(userId,articlesItem.getArticleID());
+            }else{
+                addBookmark(userId,articlesItem.getArticleID());
             }
         });
 
@@ -84,9 +94,37 @@ public class NewsDetailFragment extends Fragment {
         return root;
     }
 
+    private void setBookmarkedState(){
+        bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_blue);
+        bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteBookmark(userId,articlesItem.getArticleID());
+            }
+        });
+    }
+
+    private void setNotBookmarkedState(){
+        bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_blank);
+        bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBookmark(userId,articlesItem.getArticleID());
+            }
+        });
+    }
+
+
     private void addBookmark(int userId , int articleId) {
         newsRepository.room.insert(new UserArticleCrossRef(userId,articleId));
-//        Toast.makeText(getContext(),"Add to Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"Add to Bookmark " +articlesItem.getTitle(),Toast.LENGTH_LONG).show();
+        setBookmarkedState();
+    }
+
+    private void deleteBookmark(int userId,int articleId) {
+        newsRepository.room.delete(new UserArticleCrossRef(userId,articleId));
+        Toast.makeText(getContext(),"Delete Bookmark " +articlesItem.getTitle(),Toast.LENGTH_LONG).show();
+        setNotBookmarkedState();
     }
 
 
