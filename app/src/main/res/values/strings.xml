@@ -21,5 +21,8 @@
 
     <string name="three_dots">⋮</string>
     <string name="no_article_with_title">No article found with title</string>
+    <string name="headlines">Headlines</string>
+    <string name="bookmark">Bookmark</string>
+
 
 </resources>

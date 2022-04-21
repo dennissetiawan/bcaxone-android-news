@@ -51,21 +51,26 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         }
 
         BottomSheetFragment fragment = this;
-        root.findViewById(R.id.bottom_sheet_bookmark).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int userId = SessionManagement.getInstance().getUserInSessionId(requireContext());
-                if(fromFragment instanceof BookmarkFragment){
-                    newsRepository.room.delete(new UserArticleCrossRef(userId,item.getArticleID()));
-                    Toast.makeText(getContext(),"Delete Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
-                    ((BookmarkFragment) fromFragment).reloadData();
-                }else{
-                    newsRepository.room.insert(new UserArticleCrossRef(userId,item.getArticleID()));
-                    Toast.makeText(getContext(),"Add to Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
-                }
-                fragment.dismiss();
+        root.findViewById(R.id.bottom_sheet_bookmark).setOnClickListener(view -> {
+            int userId = SessionManagement.getInstance().getUserInSessionId(requireContext());
+            if(fromFragment instanceof BookmarkFragment){
+                deleteBookmark(userId,item.getArticleID());
+            }else{
+                addBookmark(userId,item.getArticleID());
             }
+            fragment.dismiss();
         });
         return root;
+    }
+
+    private void addBookmark(int userId , int articleId) {
+        newsRepository.room.insert(new UserArticleCrossRef(userId,articleId));
+        Toast.makeText(getContext(),"Add to Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
+    }
+
+    private void deleteBookmark(int userId,int articleId) {
+        newsRepository.room.delete(new UserArticleCrossRef(userId,articleId));
+        Toast.makeText(getContext(),"Delete Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
+        ((BookmarkFragment) fromFragment).reloadData();
     }
 }
