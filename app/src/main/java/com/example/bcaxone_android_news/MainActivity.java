@@ -114,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(!isHome){
             isHome = true;
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment())
-                    .commitNow();
+
             bottomNavigationView.setVisibility(View.VISIBLE);
+            bottomNavigationView.setSelectedItemId(R.id.page_1);
 
         }else{
             super.onBackPressed();
