@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bcaxone_android_news.NewsViewModel;
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.adapter.ItemDataAdapter;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +89,6 @@ public class HomeTabContentFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Nullable

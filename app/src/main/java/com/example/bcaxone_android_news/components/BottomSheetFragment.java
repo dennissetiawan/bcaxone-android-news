@@ -1,4 +1,4 @@
-package com.example.bcaxone_android_news;
+package com.example.bcaxone_android_news.components;
 
 
 import android.content.Intent;
@@ -12,18 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
+import com.example.bcaxone_android_news.R;
+import com.example.bcaxone_android_news.SessionManagement;
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
 import com.example.bcaxone_android_news.repository.NewsRepository;
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
+import com.example.bcaxone_android_news.service.NotificationTimerService;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
-import java.util.Objects;
 
 import model.ArticlesItem;
-import model.UserWithArticles;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
     ArticlesItem item;
@@ -42,7 +42,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newsRepository = new NewsRepository(requireActivity().getApplication());
-        userId =SessionManagement.getInstance().getUserInSessionId(requireContext());
+        userId = SessionManagement.getInstance().getUserInSessionId(requireContext());
     }
 
     @Override
@@ -54,7 +54,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         ImageView imageView = root.findViewById(R.id.bottom_sheet_bookmark_imageview);
         View bookmarkItem = root.findViewById(R.id.bottom_sheet_bookmark);
         View shareItem = root.findViewById(R.id.bottom_sheet_share);
+        View remindItem = root.findViewById(R.id.bottom_sheet_remindme);
 
+        remindItem.setOnClickListener(view -> setReminder());
         shareItem.setOnClickListener(view -> share());
 
         newsRepository.room.getUserSavedArticles(userId).observe(getViewLifecycleOwner(), userWithArticles -> {
@@ -74,7 +76,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             setBookmarkedState(textView, imageView);
         }
 
-        BottomSheetFragment fragment = this;
 
         bookmarkItem.setOnClickListener(view -> {
             if(fromFragment instanceof BookmarkFragment || isBookmarked){
@@ -82,7 +83,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }else{
                 addBookmark(userId,item.getArticleID());
             }
-            fragment.dismiss();
+            this.dismiss();
         });
         return root;
     }
@@ -112,5 +113,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "News Sharing");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
+    }
+
+    private void setReminder(){
+        Intent reminderIntent = new Intent(getActivity(), NotificationTimerService.class);
+        reminderIntent.putExtra(NotificationTimerService.SERVICE_NOTIFICATION_NEWS_ID,item.getArticleID());
+        reminderIntent.putExtra(NotificationTimerService.SERVICE_NOTIFICATION_NEWS_TITLE,item.getTitle());
+        getActivity().startService(reminderIntent);
+        this.dismiss();
     }
 }

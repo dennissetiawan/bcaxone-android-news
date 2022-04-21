@@ -3,6 +3,7 @@ package com.example.bcaxone_android_news;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.SearchManager;
@@ -16,13 +17,17 @@ import android.view.View;
 import android.widget.SearchView;
 
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
+import com.example.bcaxone_android_news.detail_news.NewsDetailFragment;
 import com.example.bcaxone_android_news.home.HomeFragment;
 
+import com.example.bcaxone_android_news.login.LoginActivity;
 import com.example.bcaxone_android_news.search.SearchFragment;
+import com.example.bcaxone_android_news.service.NotificationTimerService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.Calendar;
+
+import model.ArticlesItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
         sv.setIconifiedByDefault(true);
         sv.setMaxWidth(Integer.MAX_VALUE);
 
-
-
         return true;
     }
     //  LOGIN SESSION
@@ -91,8 +94,26 @@ public class MainActivity extends AppCompatActivity {
             openLoginActivity();
             return;
         }
+        Intent sourceIntent = getIntent();
+        int articleId = sourceIntent.getIntExtra(NotificationTimerService.SERVICE_NOTIFICATION_NEWS_ID,-1);
+        Log.d("MainActivity","article id from notification "+articleId);
+        if(articleId != -1){
+            sourceIntent.putExtra(NotificationTimerService.SERVICE_NOTIFICATION_NEWS_ID,-1);
+            openDetailNewsWithId(articleId);
+        }else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
+        }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commitNow();
+    }
+
+    private void openDetailNewsWithId(int articleId){
+        newsViewModel.getFromRoomArticlesWithID(articleId).observe(this, articlesItem -> {
+            if(articlesItem != null){
+                isHome = false;
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new NewsDetailFragment(articlesItem)).commitNow();
+            }
+        });
+
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -105,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openLoginActivity() {
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

@@ -14,10 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bcaxone_android_news.BottomSheetFragment;
+import com.example.bcaxone_android_news.components.BottomSheetFragment;
 
 import com.example.bcaxone_android_news.MainActivity;
-import com.example.bcaxone_android_news.NewsDetailFragment;
+import com.example.bcaxone_android_news.detail_news.NewsDetailFragment;
 
 import com.example.bcaxone_android_news.R;
 import com.squareup.picasso.Picasso;
@@ -104,7 +104,6 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
                 FragmentManager fragmentManager = fromFragment.getParentFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.main_container, newsDetailActivity)
-//                        .addToBackStack(null)
                         .commitNow();
                 MainActivity.isHome = false;
             }

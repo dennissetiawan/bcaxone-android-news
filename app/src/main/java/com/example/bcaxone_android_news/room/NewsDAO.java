@@ -27,6 +27,10 @@ public interface NewsDAO {
     @Query("SELECT * FROM Articles WHERE category = :category")
     LiveData<List<ArticlesItem>> selectArticlesWithCategory(String category);
 
+
+    @Query("SELECT * FROM Articles WHERE articleID = :articleID")
+    LiveData<ArticlesItem> selectArticleWithID(int articleID);
+
     @Transaction
     @Query("SELECT * FROM Articles WHERE lower(title) LIKE lower('%'||:title||'%') ")
     LiveData<List<ArticlesItem>> selectArticlesWithTitleContains(String title);

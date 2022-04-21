@@ -21,11 +21,11 @@ public class SessionManagement {
         return INSTANCE;
     }
 
-    public void startUserSession(Context context, int expiredIn,String userToken, int userId){
+    public void startUserSession(Context context, int expiredInSecond,String userToken, int userId){
         Calendar calendar = Calendar.getInstance();
         Date userLogginTime = calendar.getTime();
         calendar.setTime(userLogginTime);
-        calendar.add(Calendar.SECOND, expiredIn);
+        calendar.add(Calendar.SECOND, expiredInSecond);
 
         Date expireTime = calendar.getTime();
 

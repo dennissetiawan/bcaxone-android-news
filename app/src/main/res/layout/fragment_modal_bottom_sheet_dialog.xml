@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Share"
+            android:text="@string/modal_bottom_dialog_share"
             android:textColor="#737373"
             android:textSize="16sp" />
 
@@ -68,7 +68,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/bookmark"
+            android:text="@string/modal_bottom_dialog_bookmark"
+            android:textColor="#737373"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_remindme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingTop="8dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/bottom_sheet_remindme_imageview"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="32dp"
+            android:src="@android:drawable/ic_menu_today"
+            app:tint="#737373" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_remindme_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/modal_bottom_dialog_remindme"
             android:textColor="#737373"
             android:textSize="16sp" />
 

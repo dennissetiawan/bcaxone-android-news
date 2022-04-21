@@ -10,6 +10,6 @@
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/icons8_bookmark_page_50"
-        android:title="@string/bookmark"/>
+        android:title="@string/modal_bottom_dialog_bookmark"/>
 
 </menu>

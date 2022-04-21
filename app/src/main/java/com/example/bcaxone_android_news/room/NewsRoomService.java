@@ -4,6 +4,10 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.bcaxone_android_news.room.AppDatabase;
+import com.example.bcaxone_android_news.room.NewsDAO;
+import com.example.bcaxone_android_news.room.UserArticleCrossRef;
+
 import java.util.List;
 
 import model.ArticlesItem;
@@ -26,6 +30,9 @@ public class NewsRoomService {
 
     public LiveData<List<ArticlesItem>> getFromRoomArticlesWithCategory(String category){
         return newsDAO.selectArticlesWithCategory(category);
+    }
+    public LiveData<ArticlesItem> getFromRoomArticlesWithID(int articleID){
+        return newsDAO.selectArticleWithID(articleID);
     }
 
     public LiveData<List<ArticlesItem>> getFromRoomArticlesWithTitleContains(String title){

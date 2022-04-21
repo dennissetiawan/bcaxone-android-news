@@ -1,33 +1,24 @@
-package com.example.bcaxone_android_news;
+package com.example.bcaxone_android_news.login;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bcaxone_android_news.MainActivity;
+import com.example.bcaxone_android_news.R;
+import com.example.bcaxone_android_news.SessionManagement;
 import com.example.bcaxone_android_news.repository.LoginRepository;
 import com.example.bcaxone_android_news.repository.NewsRepository;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-
-import java.io.IOException;
-import java.util.Calendar;
 
 import model.LoginResponse;
 import model.LoginUserData;
 import model.User;
-import retrofit.LoginAPIService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -102,13 +93,13 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
 
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     private void startAndStoreSession(String userToken, int userId) {
-        SessionManagement.getInstance().startUserSession(LoginActivity.this,5,userToken,userId);
+        SessionManagement.getInstance().startUserSession(LoginActivity.this,60,userToken,userId);
     }
 
 }
