@@ -15,24 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.SessionManagement;
-import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
-import com.example.bcaxone_android_news.discover.DiscoverFragment;
 import com.example.bcaxone_android_news.repository.NewsRepository;
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Locale;
+
 
 import model.ArticlesItem;
 
@@ -46,7 +40,7 @@ public class NewsDetailFragment extends Fragment {
     private int userId;
     private int nextArticleId;
     private LocalDateTime publishDateInput;
-    private String publishDateOoutput ;
+    private String publishDateOutput;
     private String PublishDateNews;
     public NewsDetailFragment(ArticlesItem articlesItem) {
         this.articlesItem = articlesItem;
@@ -107,14 +101,14 @@ public class NewsDetailFragment extends Fragment {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
         DateTimeFormatter outFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         publishDateInput = LocalDateTime.parse(PublishDateNews,inputFormatter);
-         publishDateOoutput= outFormatter.format(publishDateInput);
+         publishDateOutput = outFormatter.format(publishDateInput);
 
 //        convertDate(PublishDateNews);
         titleNewsDetailTextView.setText(articlesItem.getTitle());
         descNewsDetailTextView.setText(articlesItem.getDescription());
         categoryNewsDetailTextView.setText(articlesItem.getCategory());
         authorDetailTextView.setText(" "+articlesItem.getAuthor());
-        publishDetailTextView.setText(" "+publishDateOoutput);
+        publishDetailTextView.setText(" "+ publishDateOutput);
         Picasso.with(imageViewDetail.getContext()).load(articlesItem.getUrlToImage()).noPlaceholder().error(R.drawable.icons8_no_image_100).into(imageViewDetail);
 
         return root;
