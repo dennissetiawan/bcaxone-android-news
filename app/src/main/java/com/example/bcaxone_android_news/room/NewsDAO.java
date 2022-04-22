@@ -27,6 +27,18 @@ public interface NewsDAO {
     @Query("SELECT * FROM Articles WHERE category = :category")
     LiveData<List<ArticlesItem>> selectArticlesWithCategory(String category);
 
+
+    @Query("SELECT * FROM Articles WHERE articleID = :articleID")
+    LiveData<ArticlesItem> selectArticleWithID(int articleID);
+
+    @Transaction
+    @Query("SELECT * FROM Articles WHERE lower(title) LIKE lower('%'||:title||'%') ")
+    LiveData<List<ArticlesItem>> selectArticlesWithTitleContains(String title);
+
+    @Query("SELECT COUNT(*) FROM Articles")
+    int getArticleSize();
+
+
     @Transaction
     @Query("SELECT * FROM User WHERE userID=:userId")
     public LiveData<UserWithArticles> selectUserWithArticles(int userId);
@@ -38,6 +50,9 @@ public interface NewsDAO {
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(UserArticleCrossRef userArticleCrossRef);
+
+    @Delete
+    void delete(UserArticleCrossRef userArticleCrossRef);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);

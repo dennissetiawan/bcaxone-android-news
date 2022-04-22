@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+    <!-- NOTE: This list should be displayed in a list
+    instead of nested layouts -->
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingTop="8dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="32dp"
+            android:src="@android:drawable/ic_menu_share"
+            app:tint="#737373" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/modal_bottom_dialog_share"
+            android:textColor="#737373"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_bookmark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingTop="8dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/bottom_sheet_bookmark_imageview"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/icons8_add_bookmark_50"
+            app:tint="#737373" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_bookmark_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/bookmark"
+            android:textColor="#737373"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_remindme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingTop="8dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/bottom_sheet_remindme_imageview"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="32dp"
+            android:src="@android:drawable/ic_menu_today"
+            app:tint="#737373" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_remindme_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/modal_bottom_dialog_remindme"
+            android:textColor="#737373"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -27,6 +27,17 @@ public class NewsRoomService {
     public LiveData<List<ArticlesItem>> getFromRoomArticlesWithCategory(String category){
         return newsDAO.selectArticlesWithCategory(category);
     }
+    public LiveData<ArticlesItem> getFromRoomArticlesWithID(int articleID){
+        return newsDAO.selectArticleWithID(articleID);
+    }
+
+    public LiveData<List<ArticlesItem>> getFromRoomArticlesWithTitleContains(String title){
+        return newsDAO.selectArticlesWithTitleContains(title);
+    }
+
+    public int getArticleSize(){
+        return newsDAO.getArticleSize();
+    }
 
 
     public LiveData<UserWithArticles> getUserSavedArticles(int userId){
@@ -40,6 +51,9 @@ public class NewsRoomService {
 
     public void insert(UserArticleCrossRef userArticleCrossRef){
         AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.insert(userArticleCrossRef));
+    }
+    public void delete(UserArticleCrossRef userArticleCrossRef){
+        AppDatabase.databaseWriteExecutor.execute(() -> newsDAO.delete(userArticleCrossRef));
     }
 
     public void insert(User user){

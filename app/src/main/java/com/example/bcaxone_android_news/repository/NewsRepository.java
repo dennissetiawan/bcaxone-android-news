@@ -8,8 +8,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 
-import retrofit.NewsAPIKeys;
 import com.example.bcaxone_android_news.room.NewsRoomService;
+
+import retrofit.NewsAPIKeys;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -34,7 +35,7 @@ public class NewsRepository {
 
     //networking
     NewsAPIService newsApiService;
-    private final String NEWS_API_KEY;
+    private String NEWS_API_KEY;
     private Map<String, String> query;
     private MutableLiveData<List<ArticlesItem>> articlesData = new MutableLiveData<>();
     private final ExecutorService networkExecutor = Executors.newFixedThreadPool(4);
@@ -47,7 +48,7 @@ public class NewsRepository {
     };
 
     public NewsRepository(Application application){
-        RetrofitInstance retrofitInstance = new RetrofitInstance();
+        RetrofitInstance retrofitInstance = new RetrofitInstance(NewsAPIService.BASE_URL);
         newsApiService = retrofitInstance.getNewsAPIService();
 
         query = new HashMap<>();
@@ -86,7 +87,6 @@ public class NewsRepository {
     }
 
 
-    //TODO: add desired query here in parameters and query.put
     public MutableLiveData<List<ArticlesItem>> getEverything(String q){
         articlesData = new MutableLiveData<>();
         query = createQuery();

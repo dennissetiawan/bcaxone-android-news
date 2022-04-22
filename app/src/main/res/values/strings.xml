@@ -16,5 +16,20 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="login">Login</string>
+    <string name="no_data">No Data</string>
+    <string name="no_bookmark">No Bookmarked Articles</string>
+
+    <string name="three_dots">⋮</string>
+    <string name="no_article_with_title">No article found with title</string>
+    <string name="headlines">Headlines</string>
+
+    <string name="bookmark">Bookmark</string>
+    <string name="modal_bottom_dialog_remindme">Remind me to read this</string>
+    <string name="modal_bottom_dialog_share">Share</string>
+    <string name="discover">Discover</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="discover_search">Search for news topics</string>
+
 
 </resources>

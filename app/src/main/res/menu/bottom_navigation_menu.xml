@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/bottom_navigation_item_page_headlines"
         android:enabled="true"
         android:icon="@drawable/icons8_us_news_100"
-        android:title="Headlines"
+        android:title="@string/headlines"
         />
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/bottom_navigation_item_page_discover"
+        android:enabled="true"
+        android:icon="@drawable/icons8_search_50"
+        android:title="@string/discover"/>
+    <item
+        android:id="@+id/bottom_navigation_item_page_bookmark"
         android:enabled="true"
         android:icon="@drawable/icons8_bookmark_page_50"
-        android:title="Bookmark"/>
+        android:title="@string/bookmark"/>
 
 </menu>
