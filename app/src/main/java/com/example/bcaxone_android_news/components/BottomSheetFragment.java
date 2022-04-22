@@ -133,6 +133,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         try {
             wait();
             item.setArticleID(nextArticleId);
+            newsRepository.room.insert(item);
             newsRepository.room.insert(new UserArticleCrossRef(userId, nextArticleId));
             isBookmarked = true;
             mainThread.execute(() -> setBookmarkedState(textView, imageView));

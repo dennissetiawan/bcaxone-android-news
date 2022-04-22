@@ -11,7 +11,7 @@
         android:id="@+id/discover_search_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/discover_search"
+        android:hint="@string/discover_search"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:paddingStart="20dp"

@@ -143,6 +143,7 @@ public class NewsDetailFragment extends Fragment {
         try {
             wait();
             articlesItem.setArticleID(nextArticleId);
+            newsRepository.room.insert(articlesItem);
             newsRepository.room.insert(new UserArticleCrossRef(userId, nextArticleId));
             isBookmarked = true;
             setBookmarkedState();
