@@ -103,7 +103,7 @@ public class NewsDetailFragment extends Fragment {
         publishDateInput = LocalDateTime.parse(PublishDateNews,inputFormatter);
          publishDateOutput = outFormatter.format(publishDateInput);
 
-//        convertDate(PublishDateNews);
+
         titleNewsDetailTextView.setText(articlesItem.getTitle());
         descNewsDetailTextView.setText(articlesItem.getDescription());
         categoryNewsDetailTextView.setText(articlesItem.getCategory());
@@ -114,17 +114,8 @@ public class NewsDetailFragment extends Fragment {
         return root;
     }
 
-//    public void convertDate(String dateinput) {
-//        DateFormat inputdate = new SimpleDateFormat("MMMM d,yyyy");
-//        try {
-//            this.publishDate = inputdate.parse(dateinput);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     private void setBookmarkedState(){
-        bookmarkImageButton.setImageResource(R.drawable.bookmark__2_);
+        bookmarkImageButton.setImageResource(R.drawable.bookmark_2);
         bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +125,7 @@ public class NewsDetailFragment extends Fragment {
     }
 
     private void setNotBookmarkedState(){
-        bookmarkImageButton.setImageResource(R.drawable.bookmark__1_);
+        bookmarkImageButton.setImageResource(R.drawable.bookmark_1);
         bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

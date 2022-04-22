@@ -50,7 +50,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
 android:scaleType="fitCenter"
-        android:src="@drawable/bookmark__1_"
+        android:src="@drawable/bookmark_1"
         android:background="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_news_detail_textview_category"
         app:layout_constraintEnd_toEndOf="parent"
