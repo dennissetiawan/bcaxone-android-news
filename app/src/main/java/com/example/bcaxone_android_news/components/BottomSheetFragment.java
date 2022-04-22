@@ -4,6 +4,9 @@ package com.example.bcaxone_android_news.components;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +19,15 @@ import androidx.fragment.app.Fragment;
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.SessionManagement;
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
+import com.example.bcaxone_android_news.discover.DiscoverFragment;
 import com.example.bcaxone_android_news.repository.NewsRepository;
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
 import com.example.bcaxone_android_news.service.NotificationTimerService;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import model.ArticlesItem;
 
@@ -31,6 +37,16 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     Fragment fromFragment;
     int userId;
     boolean isBookmarked;
+    private int nextArticleId;
+    TextView textView;
+    ImageView imageView;
+    private final Executor mainThread = new Executor(){
+        private final Handler handler = new Handler(Looper.getMainLooper());
+        @Override
+        public void execute(Runnable runnable) {
+            handler.post(runnable);
+        }
+    };
     public BottomSheetFragment(ArticlesItem item, Fragment fromFragment) {
         // Required empty public constructor
         this.item = item;
@@ -50,8 +66,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_modal_bottom_sheet_dialog, container, false);
-        TextView textView = root.findViewById(R.id.bottom_sheet_bookmark_textview);
-        ImageView imageView = root.findViewById(R.id.bottom_sheet_bookmark_imageview);
+        textView = root.findViewById(R.id.bottom_sheet_bookmark_textview);
+        imageView = root.findViewById(R.id.bottom_sheet_bookmark_imageview);
         View bookmarkItem = root.findViewById(R.id.bottom_sheet_bookmark);
         View shareItem = root.findViewById(R.id.bottom_sheet_share);
         View remindItem = root.findViewById(R.id.bottom_sheet_remindme);
@@ -94,10 +110,36 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     private void addBookmark(int userId , int articleId) {
-        newsRepository.room.insert(new UserArticleCrossRef(userId,articleId));
+        if(item.getArticleID()==0){
+            new Thread(this::insertWait).start();
+            new Thread(this::notifyGetArticleId).start();
+            Log.d("NewsDetailFragment","News don't exist in room, add first");
+            return;
+        }else {
+            newsRepository.room.insert(new UserArticleCrossRef(userId, articleId));
+        }
         Toast.makeText(getContext(),"Add to Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();
+        mainThread.execute(() -> setBookmarkedState(textView, imageView));
+
     }
 
+
+
+    synchronized private void notifyGetArticleId() {
+        nextArticleId = newsRepository.room.getArticleSize() + 1;
+        notify();
+    }
+    synchronized private void insertWait() {
+        try {
+            wait();
+            item.setArticleID(nextArticleId);
+            newsRepository.room.insert(new UserArticleCrossRef(userId, nextArticleId));
+            isBookmarked = true;
+            mainThread.execute(() -> setBookmarkedState(textView, imageView));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     private void deleteBookmark(int userId,int articleId) {
         newsRepository.room.delete(new UserArticleCrossRef(userId,articleId));
         Toast.makeText(getContext(),"Remove fromde Bookmark " +item.getTitle(),Toast.LENGTH_LONG).show();

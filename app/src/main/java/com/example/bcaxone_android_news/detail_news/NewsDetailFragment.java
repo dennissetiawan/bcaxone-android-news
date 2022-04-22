@@ -13,10 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.SessionManagement;
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
+import com.example.bcaxone_android_news.discover.DiscoverFragment;
 import com.example.bcaxone_android_news.repository.NewsRepository;
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
 import com.squareup.picasso.Picasso;
@@ -33,6 +35,7 @@ public class NewsDetailFragment extends Fragment {
     private NewsRepository newsRepository;
     private boolean isBookmarked;
     private int userId;
+    private int nextArticleId;
     public NewsDetailFragment(ArticlesItem articlesItem) {
         this.articlesItem = articlesItem;
     }
@@ -118,10 +121,36 @@ public class NewsDetailFragment extends Fragment {
 
 
     private void addBookmark(int userId , int articleId) {
-        newsRepository.room.insert(new UserArticleCrossRef(userId,articleId));
+
+        if(articlesItem.getArticleID()==0){
+
+            new Thread(this::insertWait).start();
+            new Thread(this::notifyGetArticleId).start();
+            Log.d("NewsDetailFragment","News don't exist in room, add first");
+            return;
+        }else {
+            newsRepository.room.insert(new UserArticleCrossRef(userId, articleId));
+        }
         Toast.makeText(getContext(),"Add to Bookmark " +articlesItem.getTitle(),Toast.LENGTH_LONG).show();
         setBookmarkedState();
     }
+
+    synchronized private void notifyGetArticleId() {
+        nextArticleId = newsRepository.room.getArticleSize() + 1;
+        notify();
+    }
+    synchronized private void insertWait() {
+        try {
+            wait();
+            articlesItem.setArticleID(nextArticleId);
+            newsRepository.room.insert(new UserArticleCrossRef(userId, nextArticleId));
+            isBookmarked = true;
+            setBookmarkedState();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void deleteBookmark(int userId,int articleId) {
         newsRepository.room.delete(new UserArticleCrossRef(userId,articleId));

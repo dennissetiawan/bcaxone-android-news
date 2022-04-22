@@ -35,6 +35,9 @@ public interface NewsDAO {
     @Query("SELECT * FROM Articles WHERE lower(title) LIKE lower('%'||:title||'%') ")
     LiveData<List<ArticlesItem>> selectArticlesWithTitleContains(String title);
 
+    @Query("SELECT COUNT(*) FROM Articles")
+    int getArticleSize();
+
 
     @Transaction
     @Query("SELECT * FROM User WHERE userID=:userId")

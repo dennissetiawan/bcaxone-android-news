@@ -57,6 +57,11 @@ public class NewsViewModel extends AndroidViewModel {
         return newsRepository.room.getFromRoomArticlesWithTitleContains(title);
     }
 
+    public int getFromRoomArticleSize() {
+        return newsRepository.room.getArticleSize();
+    }
+
+
     public void insertArticleToDB(ArticlesItem articlesItem) {
         newsRepository.room.insert(articlesItem);
     }

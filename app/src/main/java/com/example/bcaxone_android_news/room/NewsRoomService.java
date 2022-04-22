@@ -4,10 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.bcaxone_android_news.room.AppDatabase;
-import com.example.bcaxone_android_news.room.NewsDAO;
-import com.example.bcaxone_android_news.room.UserArticleCrossRef;
-
 import java.util.List;
 
 import model.ArticlesItem;
@@ -37,6 +33,10 @@ public class NewsRoomService {
 
     public LiveData<List<ArticlesItem>> getFromRoomArticlesWithTitleContains(String title){
         return newsDAO.selectArticlesWithTitleContains(title);
+    }
+
+    public int getArticleSize(){
+        return newsDAO.getArticleSize();
     }
 
 

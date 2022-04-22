@@ -18,6 +18,7 @@ import android.widget.SearchView;
 
 import com.example.bcaxone_android_news.bookmark.BookmarkFragment;
 import com.example.bcaxone_android_news.detail_news.NewsDetailFragment;
+import com.example.bcaxone_android_news.discover.DiscoverFragment;
 import com.example.bcaxone_android_news.home.HomeFragment;
 
 import com.example.bcaxone_android_news.login.LoginActivity;
@@ -50,13 +51,17 @@ public class MainActivity extends AppCompatActivity {
             int id = item.getItemId();
             Log.d("MainActivity","bottom navigation "+id);
             switch (id){
-                case R.id.page_1:
+                case R.id.bottom_navigation_item_page_headlines:
                     isHome = true;
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment()).commitNow();
                     break;
-                case R.id.page_2:
+                case R.id.bottom_navigation_item_page_bookmark:
                     isHome = false;
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new BookmarkFragment()).commitNow();
+                    break;
+                case R.id.bottom_navigation_item_page_discover:
+                    isHome = false;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new DiscoverFragment()).commitNow();
                     break;
             }
             return true;
@@ -136,8 +141,7 @@ public class MainActivity extends AppCompatActivity {
         if(!isHome){
             isHome = true;
             bottomNavigationView.setVisibility(View.VISIBLE);
-            bottomNavigationView.setSelectedItemId(R.id.page_1);
-
+            bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_item_page_headlines);
         }else{
             super.onBackPressed();
         }

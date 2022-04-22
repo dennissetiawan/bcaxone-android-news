@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout-v23/modal_bottom_sheet.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.239581298828125" />
+        <entry key="app/src/main/res/layout/fragment_discover.xml" value="0.23224852071005916" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/fragment_modal_bottom_sheet_dialog.xml" value="0.4109196980794271" />
         <entry key="app/src/main/res/layout/fragment_news_detail.xml" value="0.4774669628547805" />
