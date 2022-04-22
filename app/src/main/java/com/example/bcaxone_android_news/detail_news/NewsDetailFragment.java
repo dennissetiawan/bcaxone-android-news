@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.bcaxone_android_news.R;
 import com.example.bcaxone_android_news.SessionManagement;
 import com.example.bcaxone_android_news.repository.NewsRepository;
@@ -108,9 +109,9 @@ public class NewsDetailFragment extends Fragment {
         descNewsDetailTextView.setText(articlesItem.getDescription());
         categoryNewsDetailTextView.setText(articlesItem.getCategory());
         authorDetailTextView.setText(" "+articlesItem.getAuthor());
-        publishDetailTextView.setText(" "+ publishDateOutput);
-        Picasso.with(imageViewDetail.getContext()).load(articlesItem.getUrlToImage()).noPlaceholder().error(R.drawable.icons8_no_image_100).into(imageViewDetail);
-
+        publishDetailTextView.setText(" "+publishDateOutput);
+//        Picasso.with(imageViewDetail.getContext()).load(articlesItem.getUrlToImage()).noPlaceholder().error(R.drawable.icons8_no_image_100).into(imageViewDetail);
+        Glide.with(imageViewDetail.getContext()).load(articlesItem.getUrlToImage()).error(R.drawable.icons8_no_image_100).placeholder(R.drawable.icons8_buffering_96).into(imageViewDetail);
         return root;
     }
 
