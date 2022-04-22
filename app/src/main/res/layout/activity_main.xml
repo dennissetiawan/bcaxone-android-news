@@ -8,18 +8,17 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
+        android:background="#0177F3"
         android:elevation="8dp"
         android:outlineSpotShadowColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:titleTextColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-<!--        android:background="@color/design_default_color_primary"-->
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/main_container"

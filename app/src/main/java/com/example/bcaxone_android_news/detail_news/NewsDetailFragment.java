@@ -1,5 +1,6 @@
 package com.example.bcaxone_android_news.detail_news;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.bcaxone_android_news.R;
@@ -21,7 +23,14 @@ import com.example.bcaxone_android_news.repository.NewsRepository;
 import com.example.bcaxone_android_news.room.UserArticleCrossRef;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import model.ArticlesItem;
 
@@ -33,6 +42,9 @@ public class NewsDetailFragment extends Fragment {
     private NewsRepository newsRepository;
     private boolean isBookmarked;
     private int userId;
+    private LocalDateTime publishDateInput;
+    private String publishDateOoutput ;
+    private String PublishDateNews;
     public NewsDetailFragment(ArticlesItem articlesItem) {
         this.articlesItem = articlesItem;
     }
@@ -45,6 +57,7 @@ public class NewsDetailFragment extends Fragment {
         newsRepository = new NewsRepository(requireActivity().getApplication());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,15 +99,32 @@ public class NewsDetailFragment extends Fragment {
             }
         });
 
+        PublishDateNews = articlesItem.getPublishedAt();
+
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        DateTimeFormatter outFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        publishDateInput = LocalDateTime.parse(PublishDateNews,inputFormatter);
+         publishDateOoutput= outFormatter.format(publishDateInput);
+
+//        convertDate(PublishDateNews);
         titleNewsDetailTextView.setText(articlesItem.getTitle());
         descNewsDetailTextView.setText(articlesItem.getDescription());
         categoryNewsDetailTextView.setText(articlesItem.getCategory());
         authorDetailTextView.setText(" "+articlesItem.getAuthor());
-        publishDetailTextView.setText(" "+articlesItem.getPublishedAt());
+        publishDetailTextView.setText(" "+publishDateOoutput);
         Picasso.with(imageViewDetail.getContext()).load(articlesItem.getUrlToImage()).noPlaceholder().error(R.drawable.icons8_no_image_100).into(imageViewDetail);
 
         return root;
     }
+
+//    public void convertDate(String dateinput) {
+//        DateFormat inputdate = new SimpleDateFormat("MMMM d,yyyy");
+//        try {
+//            this.publishDate = inputdate.parse(dateinput);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void setBookmarkedState(){
         bookmarkImageButton.setImageResource(R.drawable.bookmark__2_);
