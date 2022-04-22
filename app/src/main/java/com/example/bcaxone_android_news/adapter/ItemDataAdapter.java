@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bcaxone_android_news.components.BottomSheetFragment;
 
 import com.example.bcaxone_android_news.MainActivity;
@@ -21,6 +22,7 @@ import com.example.bcaxone_android_news.detail_news.NewsDetailFragment;
 
 import com.example.bcaxone_android_news.R;
 import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 
@@ -67,7 +69,8 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ViewHo
 
         holder.titleNewsTextView.setText(item.getTitle());
         holder.descNewsTextView.setText(descNews);
-        Picasso.with(holder.imageView.getContext()).load(imageNewsURL).error(R.drawable.icons8_no_image_100).placeholder(R.drawable.icons8_buffering_96).into(holder.imageView);
+//        Picasso.with(holder.imageView.getContext()).load(imageNewsURL).error(R.drawable.icons8_no_image_100).placeholder(R.drawable.icons8_buffering_96).into(holder.imageView);
+        Glide.with(holder.imageView.getContext()).load(imageNewsURL).error(R.drawable.icons8_no_image_100).placeholder(R.drawable.icons8_buffering_96).into(holder.imageView);
         holder.threeDotsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
