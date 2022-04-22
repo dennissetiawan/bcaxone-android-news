@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Bcaxoneandroidnews" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#6750A4</item>
-        <item name="colorPrimaryVariant">#6750A4</item>
+        <item name="colorPrimary">#0177F3</item>
+        <item name="colorPrimaryVariant">#0177F3</item>
         <item name="colorOnPrimary">#FBE9FF</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
